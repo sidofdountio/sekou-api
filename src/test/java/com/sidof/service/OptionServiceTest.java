@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -27,7 +28,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class OptionServiceTest {
     private OptionService underTest;
-    @Mock private OptionRepo optionRepo;
+    @Mock
+    private OptionRepo optionRepo;
+
     @BeforeEach
     void setUp() {
         underTest = new OptionService(optionRepo);
@@ -40,11 +43,11 @@ class OptionServiceTest {
     @Test
     void canSaveNewOption() throws BadRequestException {
         //                given
-        Speciality  SOFTWARE = new Speciality(1L,"SOFTWARE ENGINEER");
-        Option GSI = new Option(1L,"GSI",SOFTWARE,new ArrayList<>(),new ArrayList<>());
+        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
+        Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
         underTest.save(GSI);
 //        when
-        ArgumentCaptor<Option>argumentCaptor = ArgumentCaptor.forClass(Option.class);
+        ArgumentCaptor<Option> argumentCaptor = ArgumentCaptor.forClass(Option.class);
         verify(optionRepo).save(argumentCaptor.capture());
         Option argumentCaptorValue = argumentCaptor.getValue();
 //        then
@@ -55,37 +58,40 @@ class OptionServiceTest {
     @Test
     void shouldThrowErrorWhenOptionNameExist() throws BadRequestException {
 //       given
-        Speciality  SOFTWARE = new Speciality(1L,"SOFTWARE ENGINEER");
-        Option GSI = new Option(1L,"GSI",SOFTWARE,new ArrayList<>(),new ArrayList<>());
+        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
+        Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+//        Option GSI = new Option(1L, "GSI", SOFTWARE);
 //        when
         given(optionRepo.findByName(GSI.getName())).willReturn(Optional.of(GSI));
-        assertThatThrownBy(()->underTest.save(GSI))
+        assertThatThrownBy(() -> underTest.save(GSI))
                 .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("A option with this name" + GSI.getName() + " already exist.");
+                .hasMessageContaining("A option with this name " + GSI.getName() + " already exist.");
 //        then
         verify(optionRepo, never()).save(any());
-
     }
 
     @Test
+    @Disabled
     void getOneOption() {
     }
 
     @Test
     void CanGetAllOption() throws BadRequestException {
 //                given
-        Speciality  SOFTWARE = new Speciality(1L,"SOFTWARE ENGINEER");
-        Speciality  FINANCE = new Speciality(2L,"COMPTABILITE ET GESTION");
-        Option GSI = new Option(1L,"GSI",SOFTWARE,new ArrayList<>(),new ArrayList<>());
-        Option CGE = new Option(2L,"CGE",FINANCE,new ArrayList<>(),new ArrayList<>());
-        List<Option> list = List.of(GSI,CGE);
+        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
+        Speciality FINANCE = new Speciality(2L, "COMPTABILITE ET GESTION", new Option());
+        Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+//        Option GSI = new Option(1L, "GSI", SOFTWARE);
+        Option CGE = new Option(2L, "CGE", FINANCE, new ArrayList<>(), new ArrayList<>());
+//        Option CGE = new Option(2L, "CGE",FINANCE);
+        List<Option> list = List.of(GSI, CGE);
         underTest.save(GSI);
         underTest.save(CGE);
 //        when
         //        Force to save and return a list
-        when(underTest.getAllOption())
+        when(underTest.getOptions())
                 .thenReturn(list);
-        List<Option> expected = underTest.getAllOption();
+        List<Option> expected = underTest.getOptions();
 //        then
         verify(optionRepo).findAll();
         assertThat(expected.size()).isEqualTo(2);

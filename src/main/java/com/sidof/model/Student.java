@@ -1,5 +1,6 @@
 package com.sidof.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sidof.model.enumeration.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -49,17 +51,15 @@ public class Student {
     private String emergencyContact;
     private String currentGradeLevel;
     private String imageUrl;
+    @JsonIgnore
     @OneToMany(mappedBy = "student",fetch = LAZY)
-    private List<Register> registerList;
+    private List<Register> registerList=new ArrayList<>();
     @ManyToOne
-    @JoinColumn(name = "level_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_student_level"))
+    @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_level"))
     private Level level;
     @ManyToOne
-    @JoinColumn(name = "option_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_student_option"))
+    @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_option"))
     private Option option;
-
     public Student(Long id, String firstName, String lastName, LocalDate dateOfBirth, Gender gender, String email) {
         this.id = id;
         this.firstName = firstName;

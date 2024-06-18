@@ -23,6 +23,7 @@ import static java.time.LocalDate.of;
 import static java.time.Year.*;
 import static java.time.Year.now;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @Slf4j
@@ -56,7 +57,7 @@ class RegisterServiceTest {
         var student = Student.builder()
                 .id(1L)
                 .firstName("James")
-                .lastName("Golsing")
+                .lastName("Gosling")
                 .email("jamesgolsing@gmail.com")
                 .gender(MALE)
                 .dateOfBirth(of(1985, 10, 12))
@@ -75,6 +76,7 @@ class RegisterServiceTest {
                 .endDate(Year.of(2025))
                 .startDate(now())
                 .build();
+        given(studentRepo.existsById(register.getStudent().getId())).willReturn(true);
         underTest.save(registerDto);
 //        when
         ArgumentCaptor<Register>argumentCaptor=ArgumentCaptor.forClass(Register.class);

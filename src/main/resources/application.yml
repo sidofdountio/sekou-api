@@ -13,7 +13,7 @@ spring:
     active: dev
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/dbhouse
+    url: jdbc:postgresql://localhost:5433/dbsekou
     username: sidof
     password: sidof1/@
   jpa:
@@ -25,7 +25,7 @@ spring:
         format_sql: true
     show-sql: true
 application:
-  title: House for rent app
+  title: Sekou
   version: v1.0.0
   file:
     upload:

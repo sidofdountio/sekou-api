@@ -10,15 +10,18 @@ import org.springframework.format.annotation.NumberFormat;
 import java.time.LocalDate;
 import java.time.Year;
 
-import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
  * Author       : sidof <br>
  * LinkedIn    :  <a href="https://www.linkedin.com/in/sidof-dountio/">sidofDountio</a> <br>
- * Since       : 05/06/2024  <br>
+ * Since       : 07/06/2024  <br>
  * Version    : v1.0.0
+ * @Param startDate and
+ * @Param endDate Represent The current year period school. To get correctly value we get a value from endYear to User.
+ * After that we make minus 1 to the value of ent start Year. It should look like this 2023-2024
  */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,5 +45,6 @@ public class Register {
     @JoinColumn(name="student_id",referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_register_student"))
     private Student student;
+
 //    TODO: we will create an class feeTuition. To save student tuition
 }

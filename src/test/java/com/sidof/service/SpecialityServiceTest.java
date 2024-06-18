@@ -1,5 +1,6 @@
 package com.sidof.service;
 
+import com.sidof.model.Option;
 import com.sidof.model.Speciality;
 import com.sidof.repo.SpecialityRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ class SpecialityServiceTest {
     @Test
     void save() throws BadRequestException {
 //                given
-        Speciality speciality = new Speciality(1L, "SOFTWARE ENGINEER");
+        Speciality speciality = new Speciality(1L, "SOFTWARE ENGINEER",new Option());
         underTest.save(speciality);
 //        when
         ArgumentCaptor<Speciality> argumentCaptor = ArgumentCaptor.forClass(Speciality.class);
@@ -58,7 +59,7 @@ class SpecialityServiceTest {
     @Test
     void showErrorWhileAddExistSpeciality() throws BadRequestException {
 //                given
-        Speciality speciality = new Speciality(1L, "SOFTWARE ENGINEER");
+        Speciality speciality = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
 //        when
         given(specialityRepo.findByName(speciality.getName()))
                 .willReturn(Optional.of(speciality));
@@ -77,8 +78,8 @@ class SpecialityServiceTest {
     @Test
     void canGetAllSpeciality() throws BadRequestException {
 //        given
-        Speciality speciality = new Speciality(1L, "SOFTWARE ENGINEER");
-        Speciality speciality1 = new Speciality(2L, "COMPTABILITE ET GESTION");
+        Speciality speciality = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
+        Speciality speciality1 = new Speciality(2L, "COMPTABILITE ET GESTION", new Option());
         List<Speciality> list = List.of(speciality, speciality1);
         underTest.save(speciality1);
         underTest.save(speciality);

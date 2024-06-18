@@ -1,5 +1,6 @@
 package com.sidof.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,8 +28,10 @@ public class Level {
     @SequenceGenerator(name = "level_id_sequence",allocationSize = 1,sequenceName = "level_id_sequence")
     private Long id;
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy = "level",fetch = LAZY)
     private List<CourseEnrollment> courseEnrollmentList=new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "level",fetch = LAZY)
     private List<Student> student=new ArrayList<>();
 

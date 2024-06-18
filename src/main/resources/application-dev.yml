@@ -1,0 +1,4 @@
+server: 8085
+profile: dev
+postgres-user:
+postgres-database:

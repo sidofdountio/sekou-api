@@ -63,11 +63,13 @@ class CourseEnrollmentServiceTest {
                 .courseEnrollmentList(new ArrayList<>())
                 .build();
         given(courseRepo.existsById(PROGRAMING.getId())).willReturn(true);
-        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER");
+        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
         Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+//        Option GSI = new Option(1L, "GSI", SOFTWARE);
         given(optionRepo.existsById(GSI.getId())).willReturn(true);
         Level LEVEL1 = new Level(1L, "LEVEL 1");
         given(levelRepo.existsById(LEVEL1.getId())).willReturn(true);
+
         CourseEnrollment courseEnrollment = new CourseEnrollment(1L, GSI, PROGRAMING, LEVEL1);
 
         underTest.save(courseEnrollment);
@@ -90,8 +92,9 @@ class CourseEnrollmentServiceTest {
                 .courseEnrollmentList(new ArrayList<>())
                 .build();
         given(courseRepo.existsById(PROGRAMING.getId())).willReturn(false);
-        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER");
+        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
         Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+//        Option GSI = new Option(1L, "GSI", SOFTWARE);
 //        given(optionRepo.existsById(GSI.getId())).willReturn(false);
         Level LEVEL1 = new Level(1L, "LEVEL 1");
 //        given(levelRepo.existsById(LEVEL1.getId())).willReturn(true);
@@ -126,8 +129,9 @@ class CourseEnrollmentServiceTest {
                 .id(1L)
                 .courseEnrollmentList(new ArrayList<>())
                 .build();
-        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER");
+        Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
         Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+//        Option GSI = new Option(1L, "GSI", SOFTWARE);
 
         Level LEVEL1 = new Level(1L, "LEVEL 1");
 
@@ -135,7 +139,6 @@ class CourseEnrollmentServiceTest {
         List<CourseEnrollment> courseEnrollmentList = List.of(courseEnrollment);
 //        when
         when(courseEnrollmentRepo.findAll()).thenReturn(courseEnrollmentList);
-
 //        then
         assertEquals(1, courseEnrollmentList.size());
         for (CourseEnrollment courseEnrollment1 : courseEnrollmentList) {

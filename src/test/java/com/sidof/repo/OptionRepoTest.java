@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class OptionRepoTest {
     @Autowired
     private OptionRepo underTest;
+    @Autowired
+    private SpecialityRepo specialityRepo;
     @BeforeEach
     void setUp() {
 
@@ -32,13 +34,15 @@ class OptionRepoTest {
 
     @Test
     void canFindByName() {
-        //                given
-        Speciality SOFTWARE = new Speciality(1L,"SOFTWARE ENGINEER");
-        Option GSI = new Option(1L,"GSI",SOFTWARE,new ArrayList<>(),new ArrayList<>());
+//               given
+        Speciality speciality = new Speciality(1L,"SOFTWARE ENGINEER");
+        Speciality SOFTWARE = specialityRepo.save(speciality);
+        Option GSI = new Option(1L,"GSI",SOFTWARE);
+//        Option GSI = new Option(1L,"GSI",SOFTWARE);
         underTest.save(GSI);
         Optional<Option> expected = underTest.findByName(GSI.getName());
         assertEquals(Optional.of(GSI),expected);
-        log.warn("TEST REPO FINDBYNAME PASSED");
+        log.info("TEST REPO FIND BY NAME PASSED");
 
     }
 }

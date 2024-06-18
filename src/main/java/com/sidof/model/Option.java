@@ -1,5 +1,6 @@
 package com.sidof.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +24,9 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
  * Option represent that student chooses to study.
  * Like GSI, TP, BAT, RH, GMH.
  */
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 public class Option {
     @Id
@@ -33,14 +34,19 @@ public class Option {
     @SequenceGenerator(name = "option_id_sequence",allocationSize = 1,sequenceName = "option_id_sequence")
     private Long id;
     private String name;
-    @OneToOne(cascade = ALL)
+    @OneToOne
     @JoinColumn(name = "speciality_id", referencedColumnName = "id")
     private Speciality speciality;
-    @OneToMany(mappedBy = "option",fetch = LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "option")
     private List<CourseEnrollment> courseEnrollmentList=new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "option",fetch = LAZY)
     private List<Student> student=new ArrayList<>();
 
-
-
+    public Option(Long id, String name, Speciality speciality) {
+        this.id = id;
+        this.name = name;
+        this.speciality = speciality;
+    }
 }

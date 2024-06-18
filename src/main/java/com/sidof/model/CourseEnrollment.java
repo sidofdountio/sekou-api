@@ -26,15 +26,12 @@ public class CourseEnrollment {
     @SequenceGenerator(name = "enrollment_id_sequence", allocationSize = 1, sequenceName = "enrollment_id_sequence")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "option_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_course_enrollment_option"))
+    @JoinColumn(name = "option_id", referencedColumnName = "id",foreignKey = @ForeignKey(name = "fk_course_enrollment_option"))
     private Option option;
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_course_enrollment_courses"))
+    @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_enrollment_courses"))
     private Course course;
     @ManyToOne
-    @JoinColumn(name = "level_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_course_enrollment_level"))
+    @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_enrollment_level"))
     private Level level;
 }

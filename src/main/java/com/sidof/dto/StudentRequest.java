@@ -24,4 +24,5 @@ public class StudentRequest {
     private Gender gender;
     private String email;
     private LocalDate dateOfBirth;
+
 }

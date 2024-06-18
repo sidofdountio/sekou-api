@@ -42,7 +42,7 @@ public class OptionController {
     public ResponseEntity<CustomResponse> getOptions()  {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("options", optionService.getAllOption()))
+                .data(of("options", optionService.getOptions()))
                 .status(OK)
                 .statusCode(OK.value())
                 .message("options retrieved")

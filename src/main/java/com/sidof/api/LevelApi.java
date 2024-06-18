@@ -5,14 +5,11 @@ import com.sidof.service.LevelService;
 import com.sidof.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 import static java.time.LocalDateTime.now;
-import static java.util.Map.*;
+import static java.util.Map.of;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -52,10 +49,10 @@ public class LevelApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getLevel(@PathVariable("id")Long id) throws BadRequestException {
+    public ResponseEntity<CustomResponse> getLevel(@PathVariable("id") Long id) throws BadRequestException {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("level", levelService.getLevels()))
+                .data(of("level", levelService.getLevel(id)))
                 .status(OK)
                 .statusCode(OK.value())
                 .message("Level retrieved")

@@ -1,5 +1,6 @@
 package com.sidof.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class Course {
     @Column(name = "title", unique = true)
     private String title;
     private int credit;
+    @JsonIgnore
     @OneToMany(mappedBy = "course",fetch = LAZY)
     private List<CourseEnrollment> courseEnrollmentList=new ArrayList<>();
 

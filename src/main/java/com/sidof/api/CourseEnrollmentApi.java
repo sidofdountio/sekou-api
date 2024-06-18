@@ -1,6 +1,5 @@
 package com.sidof.api;
 
-import com.sidof.model.Course;
 import com.sidof.model.CourseEnrollment;
 import com.sidof.service.CourseEnrollmentService;
 import com.sidof.utils.CustomResponse;
@@ -25,7 +24,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/ap/v1/sekou/courseEnrollment")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class CourseEnrollmentApi {
-    private  final CourseEnrollmentService courseEnrollmentService;
+    private final CourseEnrollmentService courseEnrollmentService;
 
     @PostMapping
     public ResponseEntity<CustomResponse> save(@RequestBody CourseEnrollment courseEnrollment) throws BadRequestException {
@@ -39,10 +38,10 @@ public class CourseEnrollmentApi {
     }
 
     @GetMapping
-    public ResponseEntity<CustomResponse> getCoursesEnrollments(){
+    public ResponseEntity<CustomResponse> getCoursesEnrollments() {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("coursesEnrollment", courseEnrollmentService.getEnrollments()))
+                .data(of("coursesEnrollments", courseEnrollmentService.getEnrollments()))
                 .status(OK)
                 .statusCode(OK.value())
                 .message("courseEnrollment retrieved")
@@ -50,10 +49,10 @@ public class CourseEnrollmentApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getCourseEnrollment(@PathVariable("id")Long id) throws BadRequestException {
+    public ResponseEntity<CustomResponse> getCourseEnrollment(@PathVariable("id") Long id) throws BadRequestException {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("courseEnrollment",courseEnrollmentService.getCourseEnrollment(id)))
+                .data(of("courseEnrollment", courseEnrollmentService.getCourseEnrollment(id)))
                 .status(OK)
                 .statusCode(OK.value())
                 .message("courseEnrollment retrieved")

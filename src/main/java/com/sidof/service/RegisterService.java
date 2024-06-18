@@ -38,10 +38,16 @@ public class RegisterService implements RegisterImpl {
         return repo.findAll();
     }
 
+    /**
+     *  Get the @param endDate from user and make minus 1 to get the start year value
+     * @param registerDtoToSave
+     * @return  Register
+     * @throws BadRequestException
+     */
     @Override
     public Register save(RegisterDto registerDtoToSave) throws BadRequestException {
         boolean existStudent = studentRepo.existsById(registerDtoToSave.getId());
-        if (existStudent) {
+        if (!existStudent) {
             log.info("Student id {} does exist", registerDtoToSave.getId());
             throw new BadRequestException(format("Student id {} does exist", registerDtoToSave.getId()));
         }
@@ -49,7 +55,7 @@ public class RegisterService implements RegisterImpl {
                 .student(registerDtoToSave.getStudent())
                 .feeRegister(registerDtoToSave.getFeeRegister())
                 .registerDate(now())
-                .startDate(registerDtoToSave.getStartDate())
+                .startDate(registerDtoToSave.getEndDate().minusYears(1))
                 .endDate(registerDtoToSave.getEndDate())
                 .build();
         log.info("Register new student {}", register);

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sidof</groupId>
-	<artifactId>school-mager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>school-manager</name>
+	<artifactId>sekou</artifactId>
+	<version>0.0.1</version>
+	<name>sekou</name>
 	<description>Demo project for Spring Boot develop an application for manage school</description>
 	<properties>
 		<java.version>17</java.version>
@@ -26,6 +26,7 @@
 				<spring.profiles.active>dev</spring.profiles.active>
 			</properties>
 		</profile>
+
 		<profile>
 			<id>prod</id>
 			<properties>
@@ -62,6 +63,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

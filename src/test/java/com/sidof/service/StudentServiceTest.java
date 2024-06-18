@@ -121,7 +121,6 @@ class StudentServiceTest {
         studentDto.setImageUrl("http://localhost:/v1/secou/sudent/image-url.png");
         assertNotEquals(studentDto.getAddress(), update.getAddress());
         log.info("TEST UPDATE STUDENT PASSED");
-
     }
 
     @Test
