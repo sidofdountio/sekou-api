@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/level")
+@RequestMapping("/api/v1/sekou/level")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class LevelApi {
     private final LevelService levelService;
@@ -56,6 +56,17 @@ public class LevelApi {
                 .status(OK)
                 .statusCode(OK.value())
                 .message("Level retrieved")
+                .build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomResponse> delete(@PathVariable("id") Long id) throws BadRequestException {
+        return ResponseEntity.ok(CustomResponse.builder()
+                .timeStamp(now())
+                .data(of("level", levelService.delete(id)))
+                .status(OK)
+                .statusCode(OK.value())
+                .message("Level deleted")
                 .build());
     }
 }

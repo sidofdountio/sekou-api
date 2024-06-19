@@ -17,7 +17,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
  * Version    : v1.0.0
  */
 
-/**
+
+@Data/**
  *  CustomResponse Class it provide to customize the output of all htt RESPONSE.<br>
  *  With   @Map<?, ?> data properties tha can contain any object
  *
@@ -29,7 +30,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
  *    @String developerMessage
  *    @Map<?, ?> data
  */
-@Data
 @SuperBuilder
 @JsonInclude(NON_NULL)
 public class CustomResponse  {

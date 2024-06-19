@@ -1,7 +1,6 @@
 package com.sidof.api;
 
 import com.sidof.dto.RegisterDto;
-import com.sidof.dto.StudentRequest;
 import com.sidof.service.RegisterService;
 import com.sidof.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +22,13 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/registration")
+@RequestMapping("/api/v1/sekou/registration")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class RegistrationApi {
     private final RegisterService registerService;
 
     @GetMapping
-    public ResponseEntity<CustomResponse> getRegistrations()  {
+    public ResponseEntity<CustomResponse> getRegistrations() {
         return new ResponseEntity<CustomResponse>(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("register", registerService.getRegisters()))
@@ -40,7 +39,7 @@ public class RegistrationApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getRegistration(@PathVariable("id")Long id) throws BadRequestException {
+    public ResponseEntity<CustomResponse> getRegistration(@PathVariable("id") Long id) throws BadRequestException {
         return new ResponseEntity<CustomResponse>(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("register", registerService.getRegister(id)))

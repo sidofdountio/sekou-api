@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/student")
+@RequestMapping("/api/v1/sekou/student")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class StudentApi {
     private final StudentService studentService;

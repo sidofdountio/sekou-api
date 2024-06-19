@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Boolean.TRUE;
+
 /**
  * Author       : sidof <br>
  * LinkedIn    :  <a href="https://www.linkedin.com/in/sidof-dountio/">sidofDountio</a> <br>
@@ -40,5 +42,11 @@ public class LevelService {
     public List<Level> getLevels(){
         log.info("Fetching Levels");
         return levelRepo.findAll();
+    }
+
+    public Boolean delete(Long id){
+        log.info("Deleted Level {}",id);
+        levelRepo.deleteById(id);
+        return TRUE;
     }
 }

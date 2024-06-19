@@ -1,7 +1,6 @@
 package com.sidof.api;
 
 import com.sidof.model.Course;
-import com.sidof.model.Option;
 import com.sidof.service.CourseService;
 import com.sidof.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/course")
+@RequestMapping("/api/v1/sekou/course")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class CourseApi {
 
@@ -41,7 +40,7 @@ public class CourseApi {
     }
 
     @GetMapping
-    public ResponseEntity<CustomResponse> getCourses(){
+    public ResponseEntity<CustomResponse> getCourses() {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("courses", courseService.getCourses()))
@@ -52,7 +51,7 @@ public class CourseApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getCourse(@PathVariable("id")Long id) throws BadRequestException {
+    public ResponseEntity<CustomResponse> getCourse(@PathVariable("id") Long id) throws BadRequestException {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("course", courseService.getCourse(id)))

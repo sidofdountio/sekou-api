@@ -1,6 +1,5 @@
 package com.sidof.api;
 
-import com.sidof.model.Level;
 import com.sidof.model.Speciality;
 import com.sidof.service.SpecialityService;
 import com.sidof.utils.CustomResponse;
@@ -22,7 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/speciality")
+@RequestMapping("/api/v1/sekou/speciality")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class SpecialityApi {
 
@@ -51,7 +50,7 @@ public class SpecialityApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getSpeciality(@PathVariable("id")Long id) throws BadRequestException {
+    public ResponseEntity<CustomResponse> getSpeciality(@PathVariable("id") Long id) throws BadRequestException {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("speciality", specialityService.getSpeciality(id)))

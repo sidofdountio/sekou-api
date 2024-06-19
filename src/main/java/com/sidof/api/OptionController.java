@@ -1,7 +1,6 @@
 package com.sidof.api;
 
 import com.sidof.model.Option;
-import com.sidof.model.Speciality;
 import com.sidof.service.OptionService;
 import com.sidof.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/option")
+@RequestMapping("/api/v1/sekou/option")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class OptionController {
     private final OptionService optionService;
@@ -39,7 +38,7 @@ public class OptionController {
     }
 
     @GetMapping
-    public ResponseEntity<CustomResponse> getOptions()  {
+    public ResponseEntity<CustomResponse> getOptions() {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("options", optionService.getOptions()))
@@ -50,7 +49,7 @@ public class OptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getOption(@PathVariable("id")Long id) throws BadRequestException {
+    public ResponseEntity<CustomResponse> getOption(@PathVariable("id") Long id) throws BadRequestException {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("option", optionService.getOption(id)))

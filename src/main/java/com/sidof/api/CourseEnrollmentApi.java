@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/ap/v1/sekou/courseEnrollment")
+@RequestMapping("/api/v1/sekou/courseEnrollment")
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "*")
 public class CourseEnrollmentApi {
     private final CourseEnrollmentService courseEnrollmentService;
