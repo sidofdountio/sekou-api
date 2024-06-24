@@ -16,24 +16,24 @@ services:
     networks:
       - network-sekou
 
-#  house-rent-api:
-#    container_name: sekou-api
-#    image: sekou-api:v1
-#    ports:
-#      - 80:8084
-#    depends_on:
-#      - postgre-sekou-db
-#    environment:
-#      SPRING_APPLICATION_JSON: '{
-#            "spring.datasource.url"  : "jdbc:postgresql://postgre-sekou-db:5432/dbsekou",
-#            "spring.datasource.username" : "sidof",
-#            "spring.datasource.password" : "sidof1/@",
-#            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
-#            "spring.jpa.hibernate.ddl-auto" : "update",
-#            "spring.profiles.active" : "prod"
-#          }'
-#    networks:
-#      - network-sekou
+  house-rent-api:
+    container_name: sekou-api
+    image: sekou-api:v1
+    ports:
+      - 80:8084
+    depends_on:
+      - postgre-sekou-db
+    environment:
+      SPRING_APPLICATION_JSON: '{
+            "spring.datasource.url"  : "jdbc:postgresql://postgre-sekou-db:5432/dbsekou",
+            "spring.datasource.username" : "sidof",
+            "spring.datasource.password" : "sidof1/@",
+            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
+            "spring.jpa.hibernate.ddl-auto" : "update",
+            "spring.profiles.active" : "prod"
+          }'
+    networks:
+      - network-sekou
 
 
 networks:

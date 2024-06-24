@@ -1,10 +1,10 @@
-# sekou-api
+<h1>sekou-api</h1>
     <hr>
     <p>This repository content the API of Sekou API</p>
     <hr>
-    <p>I you want to run Junit Test</p>
+    <p>If you want to run Junit Test</p>
     <h2>Junit test</h2>
-    <p>Open the app with any IDE and run Junit test method or run folloing command</p>
+    <p>Open the app with any IDE and run Junit test method or run following command</p>
     <p>Make sure to be in the app current directory</p>
     <ul><li><b>$ mvn test -X </b></li></ul>
     <h2>HOW TO RUN THE API</h2>
@@ -19,7 +19,7 @@
         <li><b>$ docker compose up -d</b></li>
         <p>Optional if you have docker compose v1 instead of v2</p>
         <li><b>$ docker-compose up -d</b><small style="color: green"> optional</small></li>
-        <p>Now Create the database named <b>dbsekou</b></</p>
+        <p>Now Create the database named <b>dbsekou</b></p>
         <li><b>$ docker exec -it  postgre-sekou-db bash</b></li>
         <p>Execute and Access the  database on iterative mode</p>
         <li><b>$ psql -U sidof</b></li>
@@ -27,7 +27,7 @@
         <li><b>$ CREATE DATABASE dbsekou;</b> </li>
         <p>The database it now created. you can the following command to see it</p>
         <li><b>$ \l</b></li>
-        <p>You able to see the database on list.</p>
+        <p> You will be able to see the database on list.</p>
         <p>Exit.</p>
         <p>Now let run the api using maven</p>
         <li><b>$ mvn spring-boot:run </b></li>
