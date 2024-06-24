@@ -39,17 +39,22 @@ public class RegisterService implements RegisterImpl {
     }
 
     /**
-     *  Get the @param endDate from user and make minus 1 to get the start year value
+     * Get the @param endDate from user and make minus 1 to get the start year value
+     *
      * @param registerDtoToSave
-     * @return  Register
+     * @return Register
      * @throws BadRequestException
      */
     @Override
     public Register save(RegisterDto registerDtoToSave) throws BadRequestException {
-        boolean existStudent = studentRepo.existsById(registerDtoToSave.getId());
+        boolean existStudent = studentRepo.existsById(registerDtoToSave.getStudent().getId());
         if (!existStudent) {
             log.info("Student id {} does exist", registerDtoToSave.getId());
             throw new BadRequestException(format("Student id {} does exist", registerDtoToSave.getId()));
+        }
+        if (registerDtoToSave.getFeeRegister() == 0) {
+            log.info("A registration fee can't be {}", registerDtoToSave.getFeeRegister());
+            throw new BadRequestException("A registration fee can't be " + registerDtoToSave.getFeeRegister());
         }
         var register = Register.builder()
                 .student(registerDtoToSave.getStudent())

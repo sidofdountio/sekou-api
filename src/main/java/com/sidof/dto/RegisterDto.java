@@ -22,7 +22,6 @@ import java.time.Year;
  *     @ LocalDate registerDate;
  *     @ Year startDate;
  *     @ Year endDate;
- *     @NumberFormat(pattern = "#,###.00")
  *     @ double feeRegister;
  *     @ double feeTuition;
  *     @ Student student;

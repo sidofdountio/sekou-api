@@ -64,7 +64,7 @@ public class StudentApi {
     public ResponseEntity<CustomResponse> student(@PathVariable("id") Long id) throws BadRequestException {
         return new ResponseEntity<CustomResponse>(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("students", studentService.getStudent(id)))
+                .data(of("student", studentService.getStudent(id)))
                 .message("Student retrieved")
                 .status(OK)
                 .statusCode(OK.value())

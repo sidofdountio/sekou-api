@@ -31,7 +31,7 @@ public class RegistrationApi {
     public ResponseEntity<CustomResponse> getRegistrations() {
         return new ResponseEntity<CustomResponse>(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("register", registerService.getRegisters()))
+                .data(of("registers", registerService.getRegisters()))
                 .message("Registrations retried")
                 .status(OK)
                 .statusCode(OK.value())
