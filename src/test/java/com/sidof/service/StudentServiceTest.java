@@ -51,14 +51,14 @@ class StudentServiceTest {
         //        given
         var studentRequest = StudentRequest.builder()
                 .firstName("James")
-                .lastName("Golsing")
+                .lastName("Gosling")
                 .email("jamesgolsing@gmail.com")
                 .gender(MALE)
                 .dateOfBirth(of(1985, 10, 12))
                 .build();
         var student = Student.builder()
                 .firstName("James")
-                .lastName("Golsing")
+                .lastName("Gosling")
                 .email("jamesgolsing@gmail.com")
                 .gender(MALE)
                 .dateOfBirth(of(1985, 10, 12))
@@ -81,14 +81,14 @@ class StudentServiceTest {
         //        given
         var studentRequest = StudentRequest.builder()
                 .firstName("James")
-                .lastName("Golsing")
+                .lastName("Gosling")
                 .email("jamesgolsing@gmail.com")
                 .gender(MALE)
                 .dateOfBirth(of(1985, 10, 12))
                 .build();
         var student = Student.builder()
                 .firstName("James")
-                .lastName("Golsing")
+                .lastName("Gosling")
                 .email("jamesgolsing@gmail.com")
                 .gender(MALE)
                 .dateOfBirth(of(1985, 10, 12))
@@ -109,14 +109,13 @@ class StudentServiceTest {
         studentDto.setEmail("jamesgolsing@gmail.com");
         studentDto.setId(1L);
         studentDto.setFirstName("James");
-        studentDto.setLastName("Golsing");
+        studentDto.setLastName("Gosling");
         studentDto.setGender(MALE);
         studentDto.setDateOfBirth(of(1985, 10, 12));
         given(studentRepo.existsById(studentDto.getId())).willReturn(true);
-        Student t = new Student(1L, "James", "Golsing", of(1985, 10, 12), MALE, "jamesgolsing@gmail.com");
+        Student t = new Student(1L, "James", "Gosling", of(1985, 10, 12), MALE, "jamesgolsing@gmail.com");
         when(underTest.update(studentDto)).thenReturn(t);
         Student update = underTest.update(studentDto);
-        System.out.println(update);
         studentDto.setAddress("Ontario, Canada");
         studentDto.setImageUrl("http://localhost:/v1/secou/sudent/image-url.png");
         assertNotEquals(studentDto.getAddress(), update.getAddress());

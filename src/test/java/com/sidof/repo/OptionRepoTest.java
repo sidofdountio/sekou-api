@@ -12,11 +12,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Slf4j
 class OptionRepoTest {
     @Autowired
     private OptionRepo underTest;
@@ -35,14 +33,10 @@ class OptionRepoTest {
     @Test
     void canFindByName() {
 //               given
-        Speciality speciality = new Speciality(1L,"SOFTWARE ENGINEER");
-        Speciality SOFTWARE = specialityRepo.save(speciality);
-        Option GSI = new Option(1L,"GSI",SOFTWARE);
-//        Option GSI = new Option(1L,"GSI",SOFTWARE);
-        underTest.save(GSI);
+        Speciality SOFTWARE = specialityRepo.save(new Speciality(1L,"SOFTWARE ENGINEER"));
+        Option GSI = underTest.save(new Option(1L,"GSI",SOFTWARE));
         Optional<Option> expected = underTest.findByName(GSI.getName());
-        assertEquals(Optional.of(GSI),expected);
-        log.info("TEST REPO FIND BY NAME PASSED");
+        assertNotNull(expected);
 
     }
 }

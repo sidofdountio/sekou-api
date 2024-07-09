@@ -28,7 +28,6 @@ import static org.mockito.Mockito.*;
 @Slf4j
 @ExtendWith(MockitoExtension.class)
 class CourseEnrollmentServiceTest {
-    @Autowired
     private CourseEnrollmentService underTest;
     @Mock
     private CourseEnrollmentRepo courseEnrollmentRepo;

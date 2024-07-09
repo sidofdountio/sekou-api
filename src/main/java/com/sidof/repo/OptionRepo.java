@@ -2,6 +2,7 @@ package com.sidof.repo;
 
 import com.sidof.model.Option;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -14,5 +15,6 @@ import java.util.Optional;
  */
 @Repository
 public interface OptionRepo extends JpaRepository<Option, Long> {
+    @Query("SELECT o FROM Option o WHERE o.name = ?1")
     Optional<Option>findByName(String name);
 }

@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +26,73 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Builder
 public class Course {
     @Id
-    @GeneratedValue(strategy = SEQUENCE,generator = "course_id_sequence")
-    @SequenceGenerator(name = "course_id_sequence",allocationSize = 1,sequenceName = "course_id_sequence")
+    @GeneratedValue(strategy = SEQUENCE, generator = "course_id_sequence")
+    @SequenceGenerator(name = "course_id_sequence", allocationSize = 1, sequenceName = "course_id_sequence")
     private Long id;
-    @Column(name = "title", unique = true)
+    @Column(unique = false)
     private String title;
     private int credit;
     @JsonIgnore
-    @OneToMany(mappedBy = "course",fetch = LAZY)
-    private List<CourseEnrollment> courseEnrollmentList=new ArrayList<>();
+    @OneToMany(mappedBy = "course", fetch = LAZY)
+    private List<CourseEnrollment> courseEnrollmentList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "course", fetch = LAZY)
+    private List<Assessment> assessments = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "course", fetch = LAZY)
+    private List<CourseOffering> courseOfferings = new ArrayList<>();
 
+    public Course(Long id, String title, int credit) {
+        this.id = id;
+        this.title = title;
+        this.credit = credit;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public List<CourseEnrollment> getCourseEnrollmentList() {
+        return courseEnrollmentList;
+    }
+
+    public void setCourseEnrollmentList(List<CourseEnrollment> courseEnrollmentList) {
+        this.courseEnrollmentList = courseEnrollmentList;
+    }
+
+    public List<Assessment> getAssessments() {
+        return assessments;
+    }
+
+    public void setAssessments(List<Assessment> assessments) {
+        this.assessments = assessments;
+    }
+
+    public List<CourseOffering> getCourseOfferings() {
+        return courseOfferings;
+    }
+
+    public void setCourseOfferings(List<CourseOffering> courseOfferings) {
+        this.courseOfferings = courseOfferings;
+    }
 }

@@ -44,7 +44,7 @@ class OptionServiceTest {
     void canSaveNewOption() throws BadRequestException {
         //                given
         Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
-        Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+        Option GSI = new Option(1L, "GSI", SOFTWARE);
         underTest.save(GSI);
 //        when
         ArgumentCaptor<Option> argumentCaptor = ArgumentCaptor.forClass(Option.class);
@@ -59,7 +59,7 @@ class OptionServiceTest {
     void shouldThrowErrorWhenOptionNameExist() throws BadRequestException {
 //       given
         Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
-        Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+        Option GSI = new Option(1L, "GSI", SOFTWARE);
 //        Option GSI = new Option(1L, "GSI", SOFTWARE);
 //        when
         given(optionRepo.findByName(GSI.getName())).willReturn(Optional.of(GSI));
@@ -80,9 +80,9 @@ class OptionServiceTest {
 //                given
         Speciality SOFTWARE = new Speciality(1L, "SOFTWARE ENGINEER", new Option());
         Speciality FINANCE = new Speciality(2L, "COMPTABILITE ET GESTION", new Option());
-        Option GSI = new Option(1L, "GSI", SOFTWARE, new ArrayList<>(), new ArrayList<>());
+        Option GSI = new Option(1L, "GSI", SOFTWARE);
 //        Option GSI = new Option(1L, "GSI", SOFTWARE);
-        Option CGE = new Option(2L, "CGE", FINANCE, new ArrayList<>(), new ArrayList<>());
+        Option CGE = new Option(2L, "CGE", FINANCE);
 //        Option CGE = new Option(2L, "CGE",FINANCE);
         List<Option> list = List.of(GSI, CGE);
         underTest.save(GSI);

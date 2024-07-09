@@ -2,6 +2,7 @@ package com.sidof.repo;
 
 import com.sidof.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -12,5 +13,6 @@ import java.util.Optional;
  * Version    : v1.0.0
  */
 public interface CourseRepo extends JpaRepository<Course,Long> {
+    @Query("SELECT c FROM Course c WHERE c.title = ?1")
     Optional<Course> findByTitle(String title);
 }

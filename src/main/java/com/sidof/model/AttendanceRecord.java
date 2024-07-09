@@ -1,5 +1,7 @@
 package com.sidof.model;
 
+import com.sidof.model.enumeration.AttendanceStatus;
+
 import java.time.LocalDate;
 
 /**
@@ -13,5 +15,5 @@ public class AttendanceRecord {
     private Student student;
     private Course course;
     private LocalDate date;
-//    private AttendanceStatus status;
+    private AttendanceStatus status;
 }

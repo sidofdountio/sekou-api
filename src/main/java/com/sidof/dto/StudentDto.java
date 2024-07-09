@@ -30,7 +30,7 @@ public class StudentDto {
     private LocalDate dateOfBirth;
     private Gender gender;
     private String email;
-    private String phoneNumber;
+    private int phoneNumber;
     private String address;
     private String emergencyContact;
     private String currentGradeLevel;

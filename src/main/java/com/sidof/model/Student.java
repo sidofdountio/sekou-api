@@ -39,27 +39,33 @@ public class Student {
     @GeneratedValue(strategy = SEQUENCE,generator = "student_id_sequence")
     @SequenceGenerator(name = "student_id_sequence",allocationSize = 1,sequenceName = "student_id_sequence")
     private Long id;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
     private LocalDate dateOfBirth;
     @Enumerated(STRING)
     private Gender gender;
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
-    private String phoneNumber;
+    private int phoneNumber;
     private String address;
     private String emergencyContact;
     private String currentGradeLevel;
+    @Column(nullable = true)
     private String imageUrl;
     @JsonIgnore
     @OneToMany(mappedBy = "student",fetch = LAZY)
     private List<Register> registerList=new ArrayList<>();
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_level"))
     private Level level;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_option"))
     private Option option;
+    @JsonIgnore
+    @OneToMany(mappedBy ="student", fetch = LAZY)
+    private List <StudentAssessment> studentAssessments=new ArrayList<>();
     public Student(Long id, String firstName, String lastName, LocalDate dateOfBirth, Gender gender, String email) {
         this.id = id;
         this.firstName = firstName;

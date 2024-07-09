@@ -34,7 +34,15 @@ public class Level {
     @JsonIgnore
     @OneToMany(mappedBy = "level",fetch = LAZY)
     private List<Student> student=new ArrayList<>();
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "level",fetch = LAZY)
+    private List<Assessment> assessments=new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "level",fetch = LAZY)
+    private List<CourseOffering> courseOfferings=new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "level",fetch = LAZY)
+    private List<StudentAssessment> studentAssessments=new ArrayList<>();
     public Level(Long id, String name) {
         this.id = id;
         this.name = name;
