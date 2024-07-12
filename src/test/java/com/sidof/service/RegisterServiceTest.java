@@ -20,9 +20,7 @@ import java.time.Year;
 
 import static com.sidof.model.enumeration.Gender.MALE;
 import static java.time.LocalDate.of;
-import static java.time.Year.*;
 import static java.time.Year.now;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -30,14 +28,14 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class RegisterServiceTest {
     private RegisterService underTest;
-   @Mock
-   private RegisterRepo repo;
+    @Mock
+    private RegisterRepo repo;
     @Mock
     private StudentRepo studentRepo;
 
     @BeforeEach
     void setUp() {
-        underTest = new RegisterService(repo,studentRepo);
+        underTest = new RegisterService(repo, studentRepo);
     }
 
     @AfterEach
@@ -79,7 +77,7 @@ class RegisterServiceTest {
         given(studentRepo.existsById(register.getStudent().getId())).willReturn(true);
         underTest.save(registerDto);
 //        when
-        ArgumentCaptor<Register>argumentCaptor=ArgumentCaptor.forClass(Register.class);
+        ArgumentCaptor<Register> argumentCaptor = ArgumentCaptor.forClass(Register.class);
         verify(repo).save(argumentCaptor.capture());
         Register argumentCaptorValue = argumentCaptor.getValue();
 //        then
