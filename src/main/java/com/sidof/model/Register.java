@@ -41,10 +41,8 @@ public class Register {
     private Year endDate;
     @NumberFormat(pattern = "#,###.00")
     private double feeRegister;
-    //    private double feeTuition;
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_register_student"))
+    @JoinColumn(name = "student_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_register_student"))
     private Student student;
 
 //    TODO: we will create an class feeTuition. To save student tuition

@@ -31,7 +31,7 @@ public class OptionService implements OptionServiceImpl {
      */
     @Override
     public Option save(Option optionToSave) throws BadRequestException {
-        log.info("option details {}",optionToSave);
+        log.info("option details {}", optionToSave);
         Optional<Option> speciality = repo.findByName(optionToSave.getName());
 
 

@@ -13,6 +13,10 @@ import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+/**
+ * The class encapsule
+ *
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,22 +29,22 @@ public class StudentAssessment {
     @Column(nullable = false)
     private int score;
     private String feedback;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_assessment_student"))
     private Student student;
     @Column(nullable = false,name = "years")
     private Year year;
     @Enumerated(STRING)
     private AssessmentType assessmentType;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_assessment_level"))
     private Level level;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_assessment_option"))
     private Option option;
     @Enumerated(STRING)
     private StudentStatus studentStatus;
-        @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JoinColumn(name = "assessment_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_assessment_assessment"))
     private Assessment assessment;
 

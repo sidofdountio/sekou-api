@@ -2,10 +2,7 @@ package com.sidof.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @AllArgsConstructor
 @Entity
 @Builder
+@Table(name = "course")
 public class Course {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "course_id_sequence")
@@ -33,66 +31,13 @@ public class Course {
     private String title;
     private int credit;
     @JsonIgnore
-    @OneToMany(mappedBy = "course", fetch = LAZY)
+    @OneToMany(mappedBy = "course")
     private List<CourseEnrollment> courseEnrollmentList = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "course", fetch = LAZY)
+    @OneToMany(mappedBy = "course")
     private List<Assessment> assessments = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "course", fetch = LAZY)
+    @OneToMany(mappedBy = "course")
     private List<CourseOffering> courseOfferings = new ArrayList<>();
 
-    public Course(Long id, String title, int credit) {
-        this.id = id;
-        this.title = title;
-        this.credit = credit;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getCredit() {
-        return credit;
-    }
-
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
-
-    public List<CourseEnrollment> getCourseEnrollmentList() {
-        return courseEnrollmentList;
-    }
-
-    public void setCourseEnrollmentList(List<CourseEnrollment> courseEnrollmentList) {
-        this.courseEnrollmentList = courseEnrollmentList;
-    }
-
-    public List<Assessment> getAssessments() {
-        return assessments;
-    }
-
-    public void setAssessments(List<Assessment> assessments) {
-        this.assessments = assessments;
-    }
-
-    public List<CourseOffering> getCourseOfferings() {
-        return courseOfferings;
-    }
-
-    public void setCourseOfferings(List<CourseOffering> courseOfferings) {
-        this.courseOfferings = courseOfferings;
-    }
 }

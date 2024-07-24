@@ -1,10 +1,7 @@
 package com.sidof.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -18,32 +15,33 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Entity
 public class CourseOffering {
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "sequence_course_offering")
-    @SequenceGenerator(name = "sequence_course_offering", allocationSize = 1, sequenceName = "sequence_course_offering")
+    @GeneratedValue(strategy = SEQUENCE, generator = "sequence_id_courseoffering")
+    @SequenceGenerator(name = "sequence_id_courseoffering", allocationSize = 1, sequenceName = "sequence_id_courseoffering")
     private Long id;
     @Column(nullable = false)
-    private LocalTime starTime;
+    private LocalTime startTime;
     @Column(nullable = false)
     private LocalTime endTime;
     @Column(nullable = false)
     private DayOfWeek dayOfWeek;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_level"))
-    private Level level;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_option"))
-    private Option option;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_course"))
-    private Course course;
-        @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_teacher"))
-    private Teacher teacher;
     @Column(name = "years",nullable = false)
     private Year year;
+    @ManyToOne
+    @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_option"))
+    private Option option;
+    @ManyToOne
+    @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_level"))
+    private Level level;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_teacher"))
+    private Teacher teacher;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_offering_course"))
+    private Course course;
+
 
 }

@@ -36,7 +36,7 @@ public class StudentAssessmentService implements StudentAssessmentServiceImpl {
             log.error("Cannot save this student assessment. Provide valid score.");
             throw new BadRequestException("Cannot save this student assessment. Provide valid score.");
         }
-        studentAssessment.setYear(Year.now());
+//        studentAssessment.setYear(Year.now());
         log.info("saving new student assessment {}", studentAssessment);
         return repo.save(studentAssessment);
     }
@@ -75,5 +75,6 @@ public class StudentAssessmentService implements StudentAssessmentServiceImpl {
     public List<StudentAssessment> findByOptionAndLevelAndYear(Option option, Level level, Year year) {
         log.info("fetching student assessment by option {}, level {},year {}", option, level, year);
         return repo.findByOptionAndLevelAndYear(option, level, year);
+
     }
 }

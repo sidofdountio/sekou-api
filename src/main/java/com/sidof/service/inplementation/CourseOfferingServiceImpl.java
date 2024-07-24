@@ -1,5 +1,6 @@
 package com.sidof.service.inplementation;
 
+import com.sidof.dto.CourseOfferingDto;
 import com.sidof.model.CourseOffering;
 import com.sidof.model.Level;
 import com.sidof.model.Option;
@@ -17,7 +18,7 @@ import java.util.List;
 public interface CourseOfferingServiceImpl {
     List<CourseOffering>getCourseOfferings();
     List<CourseOffering> findByOptionAndLevelAndYear(Option option, Level level, Year year);
-    CourseOffering save(CourseOffering courseOffering) throws  BadRequestException;
+    CourseOffering save(CourseOffering dto) throws  BadRequestException;
     CourseOffering getCourseOffering(Long courseOfferingId) throws  BadRequestException;
     CourseOffering edite(CourseOffering courseOffering) throws  BadRequestException;
     Boolean delete(Long id);

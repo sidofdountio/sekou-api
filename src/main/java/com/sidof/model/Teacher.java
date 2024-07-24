@@ -12,11 +12,11 @@ import java.util.List;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
 public class Teacher {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "teacher_id_sequence")
@@ -24,20 +24,18 @@ public class Teacher {
     private Long id;
     private String lastName;
     private String firstName;
+    @Column(unique = true)
     private String email;
     private int phone;
+    @Column(nullable = true)
     private String grade;
+    @Column(nullable = true)
     private String diploma;
+    @Column(nullable = true)
     private int experience;
     @JsonIgnore
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
-    private List<CourseOffering> courseOfferings=new ArrayList<>();
+    @OneToMany(mappedBy = "teacher")
+    private List<CourseOffering> courseOfferingList = new ArrayList<>();
 
-    public Teacher(Long id, String lastName, String firstName, String email, int phone) {
-        this.id = id;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.email = email;
-        this.phone = phone;
-    }
+
 }

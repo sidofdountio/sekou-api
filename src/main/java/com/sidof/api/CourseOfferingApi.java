@@ -1,5 +1,6 @@
 package com.sidof.api;
 
+import com.sidof.dto.CourseOfferingDto;
 import com.sidof.model.CourseOffering;
 import com.sidof.model.Level;
 import com.sidof.model.Option;
@@ -31,10 +32,10 @@ public class CourseOfferingApi {
     private final CourseOfferingService courseOfferingService;
 
     @PostMapping
-    public ResponseEntity<CustomResponse> save(@RequestBody CourseOffering courseOffering) throws BadRequestException {
+    public ResponseEntity<CustomResponse> save(@RequestBody CourseOffering courseOfferingToSave) throws BadRequestException {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("courseOffering", courseOfferingService.save(courseOffering)))
+                .data(of("courseOffering", courseOfferingService.save(courseOfferingToSave)))
                 .status(CREATED)
                 .statusCode(CREATED.value())
                 .message("course offering created")

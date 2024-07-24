@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
@@ -24,27 +23,26 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity
 public class Level {
     @Id
-    @GeneratedValue(strategy = SEQUENCE,generator = "level_id_sequence")
-    @SequenceGenerator(name = "level_id_sequence",allocationSize = 1,sequenceName = "level_id_sequence")
+    @GeneratedValue(strategy = SEQUENCE, generator = "level_id_sequence")
+    @SequenceGenerator(name = "level_id_sequence", allocationSize = 1, sequenceName = "level_id_sequence")
     private Long id;
     private String name;
     @JsonIgnore
-    @OneToMany(mappedBy = "level",fetch = LAZY)
-    private List<CourseEnrollment> courseEnrollmentList=new ArrayList<>();
+    @OneToMany(mappedBy = "level")
+    private List<CourseOffering> courseOfferingList = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "level",fetch = LAZY)
-    private List<Student> student=new ArrayList<>();
+    @OneToMany(mappedBy = "level")
+    private List<CourseEnrollment> courseEnrollmentList = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "level",fetch = LAZY)
-    private List<Assessment> assessments=new ArrayList<>();
+    @OneToMany(mappedBy = "level")
+    private List<Student> student = new ArrayList<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "level",fetch = LAZY)
-    private List<CourseOffering> courseOfferings=new ArrayList<>();
+    @OneToMany(mappedBy = "level")
+    private List<Assessment> assessments = new ArrayList<>();
+
     @JsonIgnore
-    @OneToMany(mappedBy = "level",fetch = LAZY)
-    private List<StudentAssessment> studentAssessments=new ArrayList<>();
-    public Level(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "level")
+    private List<StudentAssessment> studentAssessments = new ArrayList<>();
+
+
 }

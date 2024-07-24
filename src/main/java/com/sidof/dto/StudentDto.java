@@ -30,7 +30,7 @@ public class StudentDto {
     private LocalDate dateOfBirth;
     private Gender gender;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String address;
     private String emergencyContact;
     private String currentGradeLevel;
@@ -39,21 +39,23 @@ public class StudentDto {
     private Option option;
 
     public Student convertDtoToStudent(StudentDto studentDto) {
-        return Student.builder()
-                .id(studentDto.getId())
-                .firstName(studentDto.getFirstName())
-                .lastName(studentDto.getLastName())
-                .email(studentDto.getEmail())
-                .gender(studentDto.getGender())
-                .address(studentDto.getAddress())
-                .level(studentDto.getLevel())
-                .currentGradeLevel(studentDto.getCurrentGradeLevel())
-                .dateOfBirth(studentDto.getDateOfBirth())
-                .option(studentDto.getOption())
-                .imageUrl(studentDto.getImageUrl())
-                .emergencyContact(studentDto.getEmergencyContact())
-                .phoneNumber(studentDto.getPhoneNumber())
-                .build();
+//        return Student.builder()
+//                .id(studentDto.getId())
+//                .firstName(studentDto.getFirstName())
+//                .lastName(studentDto.getLastName())
+//                .email(studentDto.getEmail())
+//                .gender(studentDto.getGender())
+//                .address(studentDto.getAddress())
+//                .level(studentDto.getLevel())
+//                .currentGradeLevel(studentDto.getCurrentGradeLevel())
+//                .dateOfBirth(studentDto.getDateOfBirth())
+//                .option(studentDto.getOption())
+//                .imageUrl(studentDto.getImageUrl())
+//                .emergencyContact(studentDto.getEmergencyContact())
+//                .phoneNumber(studentDto.getPhoneNumber())
+//                .build();
+
+        return new Student();
     }
 
 

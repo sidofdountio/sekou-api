@@ -57,6 +57,7 @@ public class RegisterService implements RegisterImpl {
             throw new BadRequestException("A registration fee can't be " + registerDtoToSave.getFeeRegister());
         }
         var register = Register.builder()
+                .id(null)
                 .student(registerDtoToSave.getStudent())
                 .feeRegister(registerDtoToSave.getFeeRegister())
                 .registerDate(now())

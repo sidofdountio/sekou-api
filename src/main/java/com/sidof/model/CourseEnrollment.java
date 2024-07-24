@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
@@ -26,7 +23,7 @@ public class CourseEnrollment {
     @SequenceGenerator(name = "enrollment_id_sequence", allocationSize = 1, sequenceName = "enrollment_id_sequence")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "option_id", referencedColumnName = "id",foreignKey = @ForeignKey(name = "fk_course_enrollment_option"))
+    @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_enrollment_option"))
     private Option option;
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_course_enrollment_courses"))

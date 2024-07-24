@@ -48,30 +48,23 @@ public class Student {
     private Gender gender;
     @Column(unique = true,nullable = false)
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String address;
     private String emergencyContact;
     private String currentGradeLevel;
     @Column(nullable = true)
     private String imageUrl;
     @JsonIgnore
-    @OneToMany(mappedBy = "student",fetch = LAZY)
+    @OneToMany(mappedBy = "student")
     private List<Register> registerList=new ArrayList<>();
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_level"))
     private Level level;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_option"))
     private Option option;
     @JsonIgnore
-    @OneToMany(mappedBy ="student", fetch = LAZY)
+    @OneToMany(mappedBy ="student")
     private List <StudentAssessment> studentAssessments=new ArrayList<>();
-    public Student(Long id, String firstName, String lastName, LocalDate dateOfBirth, Gender gender, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.email = email;
-    }
+
 }

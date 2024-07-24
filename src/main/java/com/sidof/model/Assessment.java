@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
  */
 @Data
 @Entity
+@Table(name = "assessment")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -37,21 +40,27 @@ public class Assessment {
     @GeneratedValue(strategy = SEQUENCE, generator = "assessment_id_sequence")
     @SequenceGenerator(name = "assessment_id_sequence", allocationSize = 1, sequenceName = "assessment_id_sequence")
     private Long id;
+    @Column(nullable = false)
+    private LocalTime startTime;
+    @Column(nullable = false)
+    private LocalTime endTime;
+    @Column(nullable = false)
+    private DayOfWeek dayOfWeek;
+    @Column(nullable = false)
     @Enumerated(STRING)
     private AssessmentType assessmentType;
-    @Column(nullable = false)
-    private LocalDate date;
-    @Column(nullable = false)
-    private LocalDate due;
     @Column(nullable = false,name = "years")
     private Year year;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
+    @JoinColumn(name = "assessment_Period_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_assessment_assessment_period"))
+    private AssessmentPeriod assessmentPeriod;
+    @ManyToOne
     @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_assessment_level"))
     private Level level;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_assessment_option"))
     private Option option;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_assessment_course"))
     private Course course;
     @JsonIgnore

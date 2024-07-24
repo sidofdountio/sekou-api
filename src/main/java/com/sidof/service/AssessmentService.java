@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.Year;
 import java.util.List;
 
-import static com.sidof.model.enumeration.AssessmentType.*;
-
 /**
  * Author       : sidof <br>
  * LinkedIn    :  <a href="https://www.linkedin.com/in/sidof-dountio/">sidofDountio</a> <br>
@@ -32,12 +30,6 @@ public class AssessmentService implements AssessmentServiceImpl {
 
     @Override
     public Assessment save(Assessment assessment) throws BadRequestException {
-        if (assessment.getDue().equals(assessment.getDate())) {
-            log.error("Cannot scheduler this assessment. Provide different date.");
-            throw new BadRequestException("Cannot scheduler this assessment. Provide different date.");
-        }
-
-        assessment.setYear(Year.now());
         log.info("saving assessment {}", assessment);
         return repo.save(assessment);
     }
@@ -63,22 +55,19 @@ public class AssessmentService implements AssessmentServiceImpl {
     public Assessment getAssessment(Long assessmentId) throws BadRequestException {
         log.info("Fetching assessment by id : {}", assessmentId);
         return repo.findById(assessmentId).orElseThrow(
-                ()-> new BadRequestException("Assessment id not found")
+                () -> new BadRequestException("Assessment id not found")
         );
     }
 
     @Override
     public List<Assessment> findByOptionAndLevelAndYear(Option option, Level level, Year year) {
-        log.info("fetching assessments {}, {}, {}",option,level,year);
-        return repo.findByOptionAndLevelAndYear(option,level,year);
+        log.info("fetching assessments {}, {}, {}", option, level, year);
+        return repo.findByOptionAndLevelAndYear(option, level, year);
     }
 
     @Override
     public List<Assessment> findByOptionAndLevelAndYearAndAssessmentType(Option option, Level level, Year year, AssessmentType assessmentType) {
-        log.info("fetching assessments {}, {}, {},{}",option,level,year,assessmentType);
-        if(assessmentType == null){
-            assessmentType = ALL;
-        }
-        return repo.findByOptionAndLevelAndYearAndAssessmentType(option,level,year,assessmentType);
+        log.info("fetching assessments {}, {}, {},{}", option, level, year, assessmentType);
+        return repo.findByOptionAndLevelAndYearAndAssessmentType(option, level, year, assessmentType);
     }
 }

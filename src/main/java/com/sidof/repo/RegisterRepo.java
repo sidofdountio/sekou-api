@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Since       : 07/06/2024  <br>
  * Version    : v1.0.0
  */
-public interface RegisterRepo extends JpaRepository<Register,Long> {
+public interface RegisterRepo extends JpaRepository<Register, Long> {
 }

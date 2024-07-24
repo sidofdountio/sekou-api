@@ -41,19 +41,6 @@ public class CourseOfferingService implements CourseOfferingServiceImpl {
 
     @Override
     public CourseOffering save(CourseOffering courseOffering) throws BadRequestException {
-        if (courseOffering.getStarTime() == null) {
-            log.error("Cannot save. Please provide start time");
-            throw new NullPointerException("Cannot save. Please provide start time");
-        }
-        if (courseOffering.getEndTime() == null) {
-            log.error("Cannot save. Please provide end time");
-            throw new BadRequestException("Cannot save. Please provide end time");
-        }
-        if (courseOffering.getStarTime().equals(courseOffering.getEndTime())) {
-            log.error("Cannot save. Please provide different time");
-            throw new NullPointerException("Cannot save. Please provide different time");
-        }
-        courseOffering.setYear(Year.now());
         log.info("saving new course offering {}", courseOffering);
         return repo.save(courseOffering);
     }
