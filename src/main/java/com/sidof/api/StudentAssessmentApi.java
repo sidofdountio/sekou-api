@@ -1,11 +1,9 @@
 package com.sidof.api;
 
-import com.sidof.model.Assessment;
 import com.sidof.model.Level;
 import com.sidof.model.Option;
 import com.sidof.model.StudentAssessment;
 import com.sidof.model.enumeration.AssessmentType;
-import com.sidof.service.AssessmentService;
 import com.sidof.service.StudentAssessmentService;
 import com.sidof.service.StudentService;
 import com.sidof.utils.CustomResponse;

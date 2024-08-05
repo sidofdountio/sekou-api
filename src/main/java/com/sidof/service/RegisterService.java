@@ -46,7 +46,7 @@ public class RegisterService implements RegisterImpl {
      * @throws BadRequestException
      */
     @Override
-    public Register save(RegisterDto registerDtoToSave) throws BadRequestException {
+    public Register save(Register registerDtoToSave) throws BadRequestException {
         boolean existStudent = studentRepo.existsById(registerDtoToSave.getStudent().getId());
         if (!existStudent) {
             log.info("Student id {} does exist", registerDtoToSave.getId());
@@ -63,6 +63,8 @@ public class RegisterService implements RegisterImpl {
                 .registerDate(now())
                 .startDate(registerDtoToSave.getEndDate().minusYears(1))
                 .endDate(registerDtoToSave.getEndDate())
+                .level(registerDtoToSave.getLevel())
+                .option(registerDtoToSave.getOption())
                 .build();
         log.info("Register new student {}", register);
         return repo.save(register);

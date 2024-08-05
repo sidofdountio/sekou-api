@@ -63,8 +63,8 @@ public class Assessment {
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_assessment_course"))
     private Course course;
-    @JsonIgnore
-    @OneToMany(mappedBy = "assessment")
-    private List<StudentAssessment> studentAssessments = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "assessment")
+//    private List<StudentAssessment> studentAssessments = new ArrayList<>();
 
 }

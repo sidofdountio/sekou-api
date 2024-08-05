@@ -53,13 +53,17 @@ public class Student {
     private String emergencyContact;
     private String currentGradeLevel;
     @Column(nullable = true)
+    private String age;
+    @Column(nullable = true)
     private String imageUrl;
     @JsonIgnore
     @OneToMany(mappedBy = "student")
     private List<Register> registerList=new ArrayList<>();
+//    For current level
     @ManyToOne
     @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_level"))
     private Level level;
+//    For current option
     @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_option"))
     private Option option;

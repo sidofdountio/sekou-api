@@ -39,10 +39,12 @@ public class Level {
     @JsonIgnore
     @OneToMany(mappedBy = "level")
     private List<Assessment> assessments = new ArrayList<>();
-
     @JsonIgnore
     @OneToMany(mappedBy = "level")
     private List<StudentAssessment> studentAssessments = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "level")
+    private List<Register> registers = new ArrayList<>();
 
 
 }

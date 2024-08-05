@@ -16,6 +16,6 @@ import java.util.List;
 public interface StudentServiceImpl {
     List<Student> getStudents();
     Student save(StudentRequest studentRequest) throws BadRequestException;
-    Student update(StudentDto studentDto) throws BadRequestException;
+    Student update(Student student) throws BadRequestException;
     Student getStudent(Long id) throws BadRequestException;
 }

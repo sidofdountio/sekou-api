@@ -3,6 +3,7 @@ package com.sidof.service;
 import com.sidof.model.Level;
 import com.sidof.model.Option;
 import com.sidof.model.StudentAssessment;
+import com.sidof.model.enumeration.Appreciation;
 import com.sidof.model.enumeration.AssessmentType;
 import com.sidof.repo.StudentAssessmentRepo;
 import com.sidof.service.inplementation.StudentAssessmentServiceImpl;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.Year;
 import java.util.List;
 
+import static com.sidof.model.enumeration.Appreciation.*;
 import static com.sidof.utils.FormatNumber.validNumber;
 
 /**
@@ -32,11 +34,26 @@ public class StudentAssessmentService implements StudentAssessmentServiceImpl {
 
     @Override
     public StudentAssessment save(StudentAssessment studentAssessment) throws BadRequestException {
-        if (!validNumber(studentAssessment.getScore())) {
+        int studentAssessmentScore = studentAssessment.getScore();
+        if (!validNumber(studentAssessmentScore)) {
             log.error("Cannot save this student assessment. Provide valid score.");
             throw new BadRequestException("Cannot save this student assessment. Provide valid score.");
         }
-//        studentAssessment.setYear(Year.now());
+        if(studentAssessmentScore <= 4){
+            studentAssessment.setAppreciation(BELOWAVERA);
+        }
+        if(studentAssessmentScore == 5 || studentAssessmentScore <= 9){
+            studentAssessment.setAppreciation(WEAK);
+        }
+        if( studentAssessmentScore == 10 ||studentAssessmentScore <= 13){
+            studentAssessment.setAppreciation(FAIRLYGOOD);
+        }
+        if( studentAssessmentScore == 14 ||studentAssessmentScore <= 16){
+            studentAssessment.setAppreciation(GOOD);
+        }
+        if( studentAssessmentScore == 17 ||studentAssessmentScore <= 20){
+            studentAssessment.setAppreciation(VERYGOOD);
+        }
         log.info("saving new student assessment {}", studentAssessment);
         return repo.save(studentAssessment);
     }

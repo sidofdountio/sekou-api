@@ -2,6 +2,7 @@ package com.sidof.api;
 
 import com.sidof.dto.StudentDto;
 import com.sidof.dto.StudentRequest;
+import com.sidof.model.Student;
 import com.sidof.service.StudentService;
 import com.sidof.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +40,10 @@ public class StudentApi {
     }
 
     @PutMapping
-    public ResponseEntity<CustomResponse> update(@RequestBody StudentDto studentDto) throws BadRequestException {
+    public ResponseEntity<CustomResponse> update(@RequestBody Student student) throws BadRequestException {
         return new ResponseEntity<CustomResponse>(CustomResponse.builder()
                 .timeStamp(now())
-                .data(of("student", studentService.update(studentDto)))
+                .data(of("student", studentService.update(student)))
                 .message("Student updated")
                 .status(CREATED)
                 .statusCode(CREATED.value())

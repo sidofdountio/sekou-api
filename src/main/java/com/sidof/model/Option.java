@@ -51,6 +51,9 @@ public class Option {
     @JsonIgnore
     @OneToMany(mappedBy = "option")
     private List<CourseOffering> courseOfferingList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "option")
+    private List<Register> registers = new ArrayList<>();
 
 
 }

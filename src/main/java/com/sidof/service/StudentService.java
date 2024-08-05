@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +43,10 @@ public class StudentService implements StudentServiceImpl {
             log.error("Email {} provide it taken", studentRequest.getEmail());
             throw new BadRequestException("Email" + studentRequest.getEmail() + "provide it taken");
         }
+
+        LocalDate dateOfBirth = studentRequest.getDateOfBirth();
+        LocalDate minusedYears = LocalDate.now().minusYears(dateOfBirth.getYear());
+        System.out.println("Age " +minusedYears);
         var student = Student.builder()
                 .firstName(studentRequest.getFirstName())
                 .lastName(studentRequest.getLastName())
@@ -53,28 +59,18 @@ public class StudentService implements StudentServiceImpl {
     }
 
     @Override
-    public Student update(StudentDto studentDto) throws BadRequestException {
-        boolean existsStudent = studentRepo.existsById(studentDto.getId());
+    public Student update(Student student) throws BadRequestException {
+        boolean existsStudent = studentRepo.existsById(student.getId());
         if (!existsStudent) {
-            log.error("Student id {} does exist", studentDto.getId());
-            throw new BadRequestException("Student id: " + studentDto.getId() + " does exit");
+            log.error("Student id {} does exist", student.getId());
+            throw new BadRequestException("Student id: " + student.getId() + " does exit");
         }
-        var student = Student.builder()
-                .id(studentDto.getId())
-                .firstName(studentDto.getFirstName())
-                .lastName(studentDto.getLastName())
-                .email(studentDto.getEmail())
-                .gender(studentDto.getGender())
-                .address(studentDto.getAddress())
-                .level(studentDto.getLevel())
-                .currentGradeLevel(studentDto.getCurrentGradeLevel())
-                .dateOfBirth(studentDto.getDateOfBirth())
-                .option(studentDto.getOption())
-                .imageUrl(studentDto.getImageUrl())
-                .emergencyContact(studentDto.getEmergencyContact())
-                .phoneNumber(studentDto.getPhoneNumber())
-                .build();
         log.info("Updating student");
+        LocalDate dateOfBirth = student.getDateOfBirth();
+
+        LocalDate minusedYears = LocalDate.now().minusYears(dateOfBirth.getYear());
+        
+        System.out.println("Age " + minusedYears);
         return studentRepo.save(student);
     }
 

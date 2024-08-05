@@ -1,6 +1,7 @@
 package com.sidof.api;
 
 import com.sidof.dto.RegisterDto;
+import com.sidof.model.Register;
 import com.sidof.service.RegisterService;
 import com.sidof.utils.CustomResponse;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class RegistrationApi {
     }
 
     @PostMapping
-    public ResponseEntity<CustomResponse> save(@RequestBody RegisterDto registerDto) throws BadRequestException {
+    public ResponseEntity<CustomResponse> save(@RequestBody Register registerDto) throws BadRequestException {
         return new ResponseEntity<CustomResponse>(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("register", registerService.save(registerDto)))
@@ -59,5 +60,7 @@ public class RegistrationApi {
                 .statusCode(CREATED.value())
                 .build(), CREATED);
     }
+
+
 
 }
