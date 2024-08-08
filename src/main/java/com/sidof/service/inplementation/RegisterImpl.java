@@ -15,6 +15,6 @@ import java.util.List;
 public interface RegisterImpl {
     List<Register> getRegisters();
     Register save(Register registerDtoToSave) throws BadRequestException;
-    Register update(RegisterDto registerDtoToSave) throws BadRequestException;
+    Register update( Register registerToUpdate) throws BadRequestException;
     Register getRegister(Long id) throws BadRequestException;
 }

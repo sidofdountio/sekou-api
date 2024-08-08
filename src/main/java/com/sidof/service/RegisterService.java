@@ -1,7 +1,7 @@
 package com.sidof.service;
 
-import com.sidof.dto.RegisterDto;
 import com.sidof.model.Register;
+import com.sidof.model.Student;
 import com.sidof.repo.RegisterRepo;
 import com.sidof.repo.StudentRepo;
 import com.sidof.service.inplementation.RegisterImpl;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sidof.utils.FormatNumber.validNumber;
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
 
@@ -47,15 +48,18 @@ public class RegisterService implements RegisterImpl {
      */
     @Override
     public Register save(Register registerDtoToSave) throws BadRequestException {
-        boolean existStudent = studentRepo.existsById(registerDtoToSave.getStudent().getId());
-        if (!existStudent) {
-            log.info("Student id {} does exist", registerDtoToSave.getId());
-            throw new BadRequestException(format("Student id {} does exist", registerDtoToSave.getId()));
+        var existStudent = studentRepo.findById(registerDtoToSave.getStudent().getId());
+        Student student = existStudent.get();
+        student.setRegisted(true);
+        if (!existStudent.isPresent()) {
+            log.info("Student ID {} does exist", registerDtoToSave.getId());
+            throw new BadRequestException("Student id does exist");
         }
-        if (registerDtoToSave.getFeeRegister() == 0) {
-            log.info("A registration fee can't be {}", registerDtoToSave.getFeeRegister());
+        if (!validNumber((registerDtoToSave.getFeeRegister()))) {
+            log.info("Not valid registration fee {}", registerDtoToSave.getFeeRegister());
             throw new BadRequestException("A registration fee can't be " + registerDtoToSave.getFeeRegister());
         }
+
         var register = Register.builder()
                 .id(null)
                 .student(registerDtoToSave.getStudent())
@@ -66,24 +70,32 @@ public class RegisterService implements RegisterImpl {
                 .level(registerDtoToSave.getLevel())
                 .option(registerDtoToSave.getOption())
                 .build();
+        /**
+         * Update register student  to true.
+         * This is only for a year.
+         */
+        studentRepo.save(student);
         log.info("Register new student {}", register);
         return repo.save(register);
     }
 
     @Override
-    public Register update(RegisterDto registerDtoToSave) throws BadRequestException {
-        Optional<Register> optionalRegister = repo.findById(registerDtoToSave.getId());
-        if (optionalRegister.isEmpty()) {
-            log.error("register id {} does exist", registerDtoToSave.getId());
-            throw new BadRequestException(format("register id {} does exist", registerDtoToSave.getId()));
+    public Register update(Register registerToUpdate) throws BadRequestException {
+        boolean existStudent = studentRepo.existsById(registerToUpdate.getStudent().getId());
+        if (!existStudent) {
+            log.info("Student id {} does exist", registerToUpdate.getId());
+            throw new BadRequestException("Student id does exist");
         }
-        var registerToUpdate = Register.builder()
-                .student(registerDtoToSave.getStudent())
-                .feeRegister(registerDtoToSave.getFeeRegister())
-                .registerDate(now())
-                .startDate(registerDtoToSave.getStartDate())
-                .endDate(registerDtoToSave.getEndDate())
-                .build();
+        Optional<Register> optionalRegister = repo.findById(registerToUpdate.getId());
+        if (optionalRegister.isEmpty()) {
+            log.error("register id {} does exist", registerToUpdate.getId());
+            throw new BadRequestException("register id {} does exist");
+        }
+        if (!validNumber((registerToUpdate.getFeeRegister()))) {
+            log.info("A registration fee cannot {}", registerToUpdate.getFeeRegister());
+            throw new BadRequestException("A registration fee can't be " + registerToUpdate.getFeeRegister());
+        }
+        registerToUpdate.setStartDate(registerToUpdate.getEndDate().minusYears(1));
         log.info("Registration updated");
         return repo.save(registerToUpdate);
     }

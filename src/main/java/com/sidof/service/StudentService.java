@@ -3,6 +3,7 @@ package com.sidof.service;
 import com.sidof.dto.StudentDto;
 import com.sidof.dto.StudentRequest;
 import com.sidof.model.Student;
+import com.sidof.model.enumeration.SchoolPayStatus;
 import com.sidof.repo.StudentRepo;
 import com.sidof.service.inplementation.StudentServiceImpl;
 import jakarta.transaction.Transactional;
@@ -13,8 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.Clock;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+
+import static com.sidof.model.enumeration.SchoolPayStatus.*;
 
 /**
  * Author       : sidof <br>
@@ -43,16 +47,16 @@ public class StudentService implements StudentServiceImpl {
             log.error("Email {} provide it taken", studentRequest.getEmail());
             throw new BadRequestException("Email" + studentRequest.getEmail() + "provide it taken");
         }
-
         LocalDate dateOfBirth = studentRequest.getDateOfBirth();
-        LocalDate minusedYears = LocalDate.now().minusYears(dateOfBirth.getYear());
-        System.out.println("Age " +minusedYears);
+        int studegeAge = LocalDate.now().minusYears(dateOfBirth.getYear()).getYear();
         var student = Student.builder()
                 .firstName(studentRequest.getFirstName())
                 .lastName(studentRequest.getLastName())
                 .email(studentRequest.getEmail())
                 .gender(studentRequest.getGender())
                 .dateOfBirth(studentRequest.getDateOfBirth())
+                .age(studegeAge)
+                .schoolPayStatus(NOPAY)
                 .build();
         log.info("Saving new student");
         return studentRepo.save(student);
@@ -67,10 +71,10 @@ public class StudentService implements StudentServiceImpl {
         }
         log.info("Updating student");
         LocalDate dateOfBirth = student.getDateOfBirth();
-
-        LocalDate minusedYears = LocalDate.now().minusYears(dateOfBirth.getYear());
-        
-        System.out.println("Age " + minusedYears);
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(dateOfBirth, currentDate);
+        int age = period.getYears();
+        student.setAge(age);
         return studentRepo.save(student);
     }
 

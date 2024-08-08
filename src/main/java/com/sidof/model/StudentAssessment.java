@@ -37,8 +37,9 @@ public class StudentAssessment {
     private Long id;
     @Column(nullable = false)
     private int score;
+    @Column(nullable = true)
     private String feedback;
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_assessment_student"))
     private Student student;
     @Column(nullable = false,name = "years")

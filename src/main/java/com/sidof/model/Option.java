@@ -54,6 +54,10 @@ public class Option {
     @JsonIgnore
     @OneToMany(mappedBy = "option")
     private List<Register> registers = new ArrayList<>();
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "option")
+    private List<SchoolFee> schoolFees = new ArrayList<>();
+    @OneToMany(mappedBy = "option")
+    private List<StudentSchoolFee> studentSchoolFees = new ArrayList<>();
 
 }

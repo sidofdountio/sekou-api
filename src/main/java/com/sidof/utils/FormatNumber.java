@@ -1,13 +1,11 @@
 package com.sidof.utils;
 
-import com.sidof.model.Option;
-import com.sidof.model.Speciality;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author       : sidof <br>
@@ -17,28 +15,47 @@ import java.util.Optional;
  */
 @Slf4j
 public class FormatNumber {
+    String regexPositiveAndNegative = "^\\d+(\\.\\d+)?$";
+    static String regex = "^\\d+(\\.\\d+)?$";
 
-    public void formatDouble(double numberToFormat){
-        DecimalFormatSymbols  decimalFormatSymbols = new DecimalFormatSymbols();
+
+    public void formatDouble(double numberToFormat) {
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         String pattern = "###.##";
-        DecimalFormat decimalFormat= new DecimalFormat();
+        DecimalFormat decimalFormat = new DecimalFormat();
         StringBuffer stringBuffer = null;
         String formatted = decimalFormat.format(numberToFormat);
     }
 
-    public static boolean validNumber(int number){
-        if (number < 0){
-            log.error("Cannot accept negative number {}",number);
-            throw new IllegalArgumentException("Cannot accept negative number "+number);
+    public static boolean validNumber(int number) {
+        boolean valid = true;
+        Pattern pattern = Pattern.compile(regex);
+        String stringNumber = String.valueOf(number);
+        Matcher matcher = pattern.matcher(stringNumber);
+        if (number < 0) {
+            log.error("Cannot accept negative number {}", number);
+            valid = false;
         }
-        return true;
+        if (!matcher.matches()) {
+            log.error(stringNumber, "{} is not a valid integer");
+            valid = false;
+        }
+        return valid;
     }
 
-    public static boolean validNumber(double number){
-        if (number < 0){
-            log.error("Cannot accept negative number {}",number);
-            throw new IllegalArgumentException("Cannot accept negative number "+number);
+    public static boolean validNumber(double number) {
+        boolean valid = true;
+        Pattern pattern = Pattern.compile(regex);
+        String stringNumber = String.valueOf(number);
+        Matcher matcher = pattern.matcher(stringNumber);
+        if (number < 0) {
+            log.error("Cannot accept negative number {}", number);
+            valid=false;
         }
-        return true;
+        if (!matcher.matches()) {
+            log.error(stringNumber, "{} is not a valid integer");
+            valid=false;
+        }
+        return valid;
     }
 }

@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
@@ -31,6 +32,7 @@ import static com.sidof.utils.FormatNumber.validNumber;
 @Transactional
 public class StudentAssessmentService implements StudentAssessmentServiceImpl {
     private final StudentAssessmentRepo repo;
+    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
 
     @Override
     public StudentAssessment save(StudentAssessment studentAssessment) throws BadRequestException {
@@ -39,19 +41,20 @@ public class StudentAssessmentService implements StudentAssessmentServiceImpl {
             log.error("Cannot save this student assessment. Provide valid score.");
             throw new BadRequestException("Cannot save this student assessment. Provide valid score.");
         }
+
         if(studentAssessmentScore <= 4){
             studentAssessment.setAppreciation(BELOWAVERA);
-        }
-        if(studentAssessmentScore == 5 || studentAssessmentScore <= 9){
+
+        }else if(studentAssessmentScore == 5 || studentAssessmentScore <= 9){
             studentAssessment.setAppreciation(WEAK);
         }
-        if( studentAssessmentScore == 10 ||studentAssessmentScore <= 13){
+        else if( studentAssessmentScore == 10 ||studentAssessmentScore <= 13){
             studentAssessment.setAppreciation(FAIRLYGOOD);
         }
-        if( studentAssessmentScore == 14 ||studentAssessmentScore <= 16){
+       else if( studentAssessmentScore == 14 ||studentAssessmentScore <= 16){
             studentAssessment.setAppreciation(GOOD);
         }
-        if( studentAssessmentScore == 17 ||studentAssessmentScore <= 20){
+        else if( studentAssessmentScore == 17 ||studentAssessmentScore <= 20){
             studentAssessment.setAppreciation(VERYGOOD);
         }
         log.info("saving new student assessment {}", studentAssessment);

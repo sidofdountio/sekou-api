@@ -60,6 +60,16 @@ public class RegistrationApi {
                 .statusCode(CREATED.value())
                 .build(), CREATED);
     }
+    @PutMapping
+    public ResponseEntity<CustomResponse> update(@RequestBody Register registerToUpdate) throws BadRequestException {
+        return new ResponseEntity<CustomResponse>(CustomResponse.builder()
+                .timeStamp(now())
+                .data(of("register", registerService.update(registerToUpdate)))
+                .message("Register created")
+                .status(CREATED)
+                .statusCode(CREATED.value())
+                .build(), CREATED);
+    }
 
 
 
