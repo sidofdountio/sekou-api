@@ -2,9 +2,7 @@ package com.sidof.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +16,6 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
  * Version    : v1.0.0
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Level {
     @Id
@@ -51,6 +47,24 @@ public class Level {
     @OneToMany(mappedBy = "level")
     private List<StudentSchoolFee> studentSchoolFees = new ArrayList<>();
 
+    public Level(Long id, String name, List<CourseOffering> courseOfferingList, List<CourseEnrollment> courseEnrollmentList, List<Student> student, List<Assessment> assessments, List<StudentAssessment> studentAssessments, List<Register> registers, List<SchoolFee> schoolFees, List<StudentSchoolFee> studentSchoolFees) {
+        this.id = id;
+        this.name = name;
+        this.courseOfferingList = courseOfferingList;
+        this.courseEnrollmentList = courseEnrollmentList;
+        this.student = student;
+        this.assessments = assessments;
+        this.studentAssessments = studentAssessments;
+        this.registers = registers;
+        this.schoolFees = schoolFees;
+        this.studentSchoolFees = studentSchoolFees;
+    }
 
+    public Level(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
+    public Level() {
+    }
 }

@@ -1,9 +1,7 @@
 package com.sidof.service;
 
-import com.sidof.dto.StudentDto;
 import com.sidof.dto.StudentRequest;
 import com.sidof.model.Student;
-import com.sidof.model.enumeration.SchoolPayStatus;
 import com.sidof.repo.StudentRepo;
 import com.sidof.service.inplementation.StudentServiceImpl;
 import jakarta.transaction.Transactional;
@@ -12,13 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
-import static com.sidof.model.enumeration.SchoolPayStatus.*;
+import static com.sidof.model.enumeration.SchoolPayStatus.NOPAY;
 
 /**
  * Author       : sidof <br>

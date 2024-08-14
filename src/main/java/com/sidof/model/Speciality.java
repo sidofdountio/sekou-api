@@ -28,4 +28,8 @@ public class Speciality {
     @OneToOne(mappedBy = "speciality")
     private Option option;
 
+    public Speciality(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

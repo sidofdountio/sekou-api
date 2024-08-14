@@ -1,9 +1,6 @@
 package com.sidof.service;
 
-import com.sidof.model.Level;
-import com.sidof.model.Option;
-import com.sidof.model.SchoolFee;
-import com.sidof.model.StudentSchoolFee;
+import com.sidof.model.*;
 import com.sidof.repo.SchoolFeeRepo;
 import com.sidof.repo.StudentRepo;
 import com.sidof.repo.StudentSchoolFeeRepo;
@@ -16,7 +13,10 @@ import org.springframework.stereotype.Service;
 import java.time.Year;
 import java.util.List;
 
+import static com.sidof.model.enumeration.SchoolPayStatus.PAY;
+import static com.sidof.model.enumeration.SchoolPayStatus.PENDING;
 import static com.sidof.utils.FormatNumber.validNumber;
+import static java.time.LocalDateTime.now;
 
 /**
  * Author       : sidof <br>
@@ -28,7 +28,6 @@ import static com.sidof.utils.FormatNumber.validNumber;
 @Slf4j
 @RequiredArgsConstructor
 public class StudentSchoolFeeService implements StudentSchoolFeeServiceImpl {
-    private final StudentSchoolFeeRepo schoolFeeToSave;
     private final StudentRepo studentRepo;
     private final SchoolFeeRepo schoolFeeRepo;
     private final StudentSchoolFeeRepo studentSchoolFeeRepo;
@@ -42,28 +41,28 @@ public class StudentSchoolFeeService implements StudentSchoolFeeServiceImpl {
      */
     @Override
     public StudentSchoolFee save(StudentSchoolFee studentSchoolFeeToSave) throws BadRequestException {
-        List<SchoolFee> schoolFeeByOptionAndLevel = schoolFeeRepo.findByOptionAndLevel(studentSchoolFeeToSave.getOption(), studentSchoolFeeToSave.getLevel());
-        var schoolFee = new SchoolFee();
-        for (SchoolFee currentSchoolFee : schoolFeeByOptionAndLevel) {
-            schoolFee = currentSchoolFee;
-        }
+        var studentById = getStudentById(studentSchoolFeeToSave);
+        SchoolFee schoolFeeByOptionAndLevel = getSchoolFeeByOptionAndLevel(studentSchoolFeeToSave);
         double firstPay = studentSchoolFeeToSave.getFirstPay();
+        double secondPay = studentSchoolFeeToSave.getSecondPay();
+        double thirdPay = studentSchoolFeeToSave.getThirdPay();
         double schoolFeeTotal = studentSchoolFeeToSave.getSchoolFeeTotal();
         if (!validNumber(schoolFeeTotal)) {
             log.error("Invalid total Fee {}", schoolFeeTotal);
             throw new IllegalArgumentException("Invalid total fee");
         }
-
         if (!validNumber(firstPay)) {
             log.error("Invalid number for first pay {}", firstPay);
             throw new IllegalArgumentException("Invalid number for first pay ");
         }
-        if (!validNumber(studentSchoolFeeToSave.getSecondPay())) {
+
+        if (!validNumber(secondPay)) {
             log.error("Invalid number for second pay {}", firstPay);
             throw new IllegalArgumentException("Invalid number for second pay ");
         }
-        if (!validNumber(studentSchoolFeeToSave.getThirdPay())) {
-            log.error("Invalid number for third pay {}", studentSchoolFeeToSave.getThirdPay());
+
+        if (!validNumber(thirdPay)) {
+            log.error("Invalid number for third pay {}", thirdPay);
             throw new IllegalArgumentException("Invalid number for third pay ");
         }
         /**
@@ -77,8 +76,12 @@ public class StudentSchoolFeeService implements StudentSchoolFeeServiceImpl {
                 log.error("First pay cannot be equals to 0 since select multi pay");
                 throw new IllegalArgumentException("First pay cannot be equals to 0 since select multi pay");
             }
-        }
+            //            Change student pay status.
+            studentById.setSchoolPayStatus(PENDING);
+            double sumOfSchoolFeePay = firstPay + secondPay + thirdPay;
+            studentSchoolFeeToSave.setSchoolFeeTotal(sumOfSchoolFeePay);
 
+        }
         /**
          * Check weather the provide school fee its matcher with normal school fee for that class.
          */
@@ -87,22 +90,48 @@ public class StudentSchoolFeeService implements StudentSchoolFeeServiceImpl {
             studentSchoolFeeToSave.setSecondPay(0);
             studentSchoolFeeToSave.setThirdPay(0);
             studentSchoolFeeToSave.setPayMultiTime(false);
-            if (schoolFeeTotal != schoolFee.getTotalFee()) {
-                log.error("School fee not match with require {}", schoolFee.getTotalFee());
+            if (schoolFeeTotal != schoolFeeByOptionAndLevel.getTotalFee()) {
+                log.error("School fee not match with require {}", schoolFeeByOptionAndLevel.getTotalFee());
                 throw new IllegalArgumentException("School fee not match with require");
             }
+//            Change student pay status.
+            studentById.setSchoolPayStatus(PAY);
         }
-        log.info("saving new schoolFee {}", schoolFeeToSave);
+//        Save STudent Change.
+        studentRepo.save(studentById);
+        studentSchoolFeeToSave.setLatestDate(now());
+        log.info("saving new schoolFee {}", studentSchoolFeeToSave);
         return studentSchoolFeeRepo.save(studentSchoolFeeToSave);
+    }
+
+    private Student getStudentById(StudentSchoolFee studentSchoolFeeToSave) throws BadRequestException {
+        var studentById = studentRepo.findById(studentSchoolFeeToSave.getStudent().getId()).orElseThrow(
+                () -> new BadRequestException("Student ID not found"));
+        return studentById;
+    }
+
+    private SchoolFee getSchoolFeeByOptionAndLevel(StudentSchoolFee studentSchoolFeeToSave) {
+        SchoolFee schoolFeeByOptionAndLevel = schoolFeeRepo.findSchoolFeeByOptionAndLevel(
+                studentSchoolFeeToSave.getOption(),
+                studentSchoolFeeToSave.getLevel());
+        return schoolFeeByOptionAndLevel;
     }
 
     @Override
     public StudentSchoolFee edit(StudentSchoolFee studentSchoolFeeToEdit) throws BadRequestException {
+        var studentById = getStudentById(studentSchoolFeeToEdit);
+        SchoolFee schoolFeeByOptionAndLevel = getSchoolFeeByOptionAndLevel(studentSchoolFeeToEdit);
+        double totalFeeSchool = schoolFeeByOptionAndLevel.getTotalFee();
         double firstPay = studentSchoolFeeToEdit.getFirstPay();
-        boolean existsById = studentSchoolFeeRepo.existsById(studentSchoolFeeToEdit.getId());
+        double thirdPay = studentSchoolFeeToEdit.getThirdPay();
+        double secondPay = studentSchoolFeeToEdit.getSecondPay();
         double schoolFeeTotal = studentSchoolFeeToEdit.getSchoolFeeTotal();
+        boolean existsById = studentSchoolFeeRepo.existsById(studentSchoolFeeToEdit.getId());
+        boolean finalStep = false;
+        studentSchoolFeeToEdit.setPayMultiTime(true);
+        studentSchoolFeeToEdit.setPayOneTime(false);
         if (!existsById) {
-            throw new BadRequestException("ID not found");
+            throw new BadRequestException("Student school Fee ID not found");
         }
         if (!validNumber(schoolFeeTotal)) {
             log.error("Invalid total Fee {}", schoolFeeTotal);
@@ -113,15 +142,44 @@ public class StudentSchoolFeeService implements StudentSchoolFeeServiceImpl {
             log.error("Invalid number for first pay {}", firstPay);
             throw new IllegalArgumentException("Invalid number for first pay ");
         }
-        if (!validNumber(studentSchoolFeeToEdit.getSecondPay())) {
+        if (!validNumber(secondPay)) {
             log.error("Invalid number for second pay {}", firstPay);
             throw new IllegalArgumentException("Invalid number for second pay ");
         }
-        if (!validNumber(studentSchoolFeeToEdit.getThirdPay())) {
-            log.error("Invalid number for third pay {}", studentSchoolFeeToEdit.getThirdPay());
+        if (!validNumber(thirdPay)) {
+            log.error("Invalid number for third pay {}", thirdPay);
             throw new IllegalArgumentException("Invalid number for third pay ");
         }
-        log.info("Updating student school fee {} ",studentSchoolFeeToEdit);
+
+        if (firstPay != 0) {
+            if (secondPay == 0) {
+                log.error("Second pay for chool fee cannot be 0 since first pay has value.");
+                throw new BadRequestException("Second pay for school fee cannot be 0 since first pay has value.");
+            }
+        } else {
+            log.error("First pay for school fee cannot be 0");
+            throw new BadRequestException("First pay for school fee cannot be 0");
+        }
+//        if (finalStep) {
+//            if (thirdPay == 0) {
+//                log.error("Third pay for chool fee cannot be 0 since second pay has value.");
+//                throw new BadRequestException("Third pay for chool fee cannot be 0 since second pay has value.");
+//            }
+//        }
+        double sumOfSchoolFeePay = firstPay + secondPay + thirdPay;
+        /**
+         * Require school fee schould be equal to the addition of  totalSchoolFee.
+         * After that student will have status pay == PAY.
+         */
+        if (sumOfSchoolFeePay == totalFeeSchool) {
+            studentById.setSchoolPayStatus(PAY);
+        } else {
+            studentById.setSchoolPayStatus(PENDING);
+        }
+        studentSchoolFeeToEdit.setSchoolFeeTotal(sumOfSchoolFeePay);
+        studentSchoolFeeToEdit.setLatestDate(now());
+        studentRepo.save(studentById);
+        log.info("Updating student school fee {} ", studentSchoolFeeToEdit);
         return studentSchoolFeeRepo.save(studentSchoolFeeToEdit);
     }
 

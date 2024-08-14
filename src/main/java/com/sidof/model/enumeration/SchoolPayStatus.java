@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-public enum SchoolPayStatus {
+public enum
+SchoolPayStatus {
     NOPAY,
     PENDING,
     PAY

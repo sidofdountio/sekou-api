@@ -1,5 +1,7 @@
 package com.sidof.api;
 
+import com.sidof.model.Level;
+import com.sidof.model.Option;
 import com.sidof.model.SchoolFee;
 import com.sidof.service.SchoolFeeService;
 import com.sidof.utils.CustomResponse;
@@ -64,6 +66,16 @@ public class SchoolFeeApi {
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("schoolFee", schoolFeeService.getSchoolFees()))
+                .status(CREATED)
+                .statusCode(CREATED.value())
+                .message("school fee retrieved")
+                .build());
+    }
+    @GetMapping(path = "{option}/{level}")
+    public ResponseEntity<CustomResponse> getSchoolFeeByOptionAndLevel(@PathVariable Option option, @PathVariable Level level) {
+        return ResponseEntity.ok(CustomResponse.builder()
+                .timeStamp(now())
+                .data(of("schoolFee", schoolFeeService.findByOptionAndLevelAndYear(option,level)))
                 .status(CREATED)
                 .statusCode(CREATED.value())
                 .message("school fee retrieved")

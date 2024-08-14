@@ -73,4 +73,12 @@ public class Student {
     @Enumerated(STRING)
     private SchoolPayStatus schoolPayStatus;
 
+    public Student(Long id, String firstName, String lastName, Gender gender, LocalDate dateOfBirth, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+    }
 }

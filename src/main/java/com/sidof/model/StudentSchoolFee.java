@@ -1,7 +1,9 @@
 package com.sidof.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.time.Year;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
@@ -41,8 +43,10 @@ public class StudentSchoolFee {
     @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_school_fee_option"))
     private Option option;
+    @Column(nullable = true)
+    private LocalDateTime latestDate;
 
-    public StudentSchoolFee(Long id, boolean payOneTime, boolean payMultiTime, double firstPay, double secondPay, double thirdPay, double schoolFeeTotal, Year year, Year endYear, String schoolYear, Student student, Level level, Option option) {
+    public StudentSchoolFee(Long id, boolean payOneTime, boolean payMultiTime, double firstPay, double secondPay, double thirdPay, double schoolFeeTotal, Year endYear, Student student, Level level, Option option) {
         this.id = id;
         this.payOneTime = payOneTime;
         this.payMultiTime = payMultiTime;
@@ -60,6 +64,15 @@ public class StudentSchoolFee {
 
     public StudentSchoolFee() {
 
+    }
+
+
+    public LocalDateTime getLatestDate() {
+        return latestDate;
+    }
+
+    public void setLatestDate(LocalDateTime latestDate) {
+        this.latestDate = latestDate;
     }
 
     public Long getId() {
@@ -164,5 +177,25 @@ public class StudentSchoolFee {
 
     public void setSchoolFeeTotal(double schoolFeeTotal) {
         this.schoolFeeTotal = schoolFeeTotal;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentSchoolFee{" +
+                "id=" + id +
+                ", payOneTime=" + payOneTime +
+                ", payMultiTime=" + payMultiTime +
+                ", firstPay=" + firstPay +
+                ", secondPay=" + secondPay +
+                ", thirdPay=" + thirdPay +
+                ", schoolFeeTotal=" + schoolFeeTotal +
+                ", year=" + year +
+                ", endYear=" + endYear +
+                ", schoolYear='" + schoolYear + '\'' +
+                ", student=" + student +
+                ", level=" + level +
+                ", option=" + option +
+                ", latestDate=" + latestDate +
+                '}';
     }
 }

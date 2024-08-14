@@ -60,4 +60,9 @@ public class Option {
     @OneToMany(mappedBy = "option")
     private List<StudentSchoolFee> studentSchoolFees = new ArrayList<>();
 
+    public Option(Long id, String name, Speciality speciality) {
+        this.id = id;
+        this.name = name;
+        this.speciality = speciality;
+    }
 }
