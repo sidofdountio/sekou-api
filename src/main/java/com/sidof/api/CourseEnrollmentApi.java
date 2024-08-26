@@ -58,4 +58,15 @@ public class CourseEnrollmentApi {
                 .message("courseEnrollment retrieved")
                 .build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomResponse> deleteCourseEnrollment(@PathVariable("id") Long id) throws BadRequestException {
+        return ResponseEntity.ok(CustomResponse.builder()
+                .timeStamp(now())
+                .data(of("courseEnrollment",courseEnrollmentService.deleteCourseEnrollment(id)))
+                .status(CREATED)
+                .statusCode(CREATED.value())
+                .message("Successfully Delete")
+                .build());
+    }
 }

@@ -45,10 +45,10 @@ public class StudentAssessmentService implements StudentAssessmentServiceImpl {
         if(studentAssessmentScore <= 4){
             studentAssessment.setAppreciation(BELOWAVERA);
 
-        }else if(studentAssessmentScore == 5 || studentAssessmentScore <= 9){
+        }else if(studentAssessmentScore == 5 || studentAssessmentScore <= 10){
             studentAssessment.setAppreciation(WEAK);
         }
-        else if( studentAssessmentScore == 10 ||studentAssessmentScore <= 13){
+        else if( studentAssessmentScore == 11 ||studentAssessmentScore <= 13){
             studentAssessment.setAppreciation(FAIRLYGOOD);
         }
        else if( studentAssessmentScore == 14 ||studentAssessmentScore <= 16){

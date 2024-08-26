@@ -23,7 +23,6 @@ import java.util.Optional;
 public class OptionService implements OptionServiceImpl {
     private final OptionRepo repo;
 
-
     /**
      * @param
      * @return
@@ -31,16 +30,26 @@ public class OptionService implements OptionServiceImpl {
      */
     @Override
     public Option save(Option optionToSave) throws BadRequestException {
-        log.info("option details {}", optionToSave);
-        Optional<Option> speciality = repo.findByName(optionToSave.getName());
-
-
-        if (speciality.isPresent()) {
+        Optional<Option> optionByName = repo.findByName(optionToSave.getName());
+        Boolean selectExistingOptionByNameAndFullName =
+                repo.selectExistingOptionByNameAndFullName(optionToSave.getName(), optionToSave.getFullName());
+        if (selectExistingOptionByNameAndFullName) {
             log.error("A Option with this name {} already exist", optionToSave.getName());
             throw new BadRequestException("A option with this name " + optionToSave.getName() + " already exist.");
         }
         log.info("Saving new option {}", optionToSave);
         return repo.save(optionToSave);
+    }
+
+    @Override
+    public Boolean deleteOption(Long id) throws BadRequestException {
+        if(!repo.existsById(id)){
+            log.error("ID not found {}",id);
+            throw new BadRequestException("ID not found");
+        }
+        log.info("Successfully deleted");
+        repo.deleteById(id);
+        return Boolean.TRUE;
     }
 
     public Option getOption(Long id) throws BadRequestException {
@@ -53,9 +62,6 @@ public class OptionService implements OptionServiceImpl {
         return repo.findById(id).get();
     }
 
-    /**
-     * @return
-     */
     @Override
     public List<Option> getOptions() {
         log.info("Fetching option");

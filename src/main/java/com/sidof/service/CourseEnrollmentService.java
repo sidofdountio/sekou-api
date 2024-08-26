@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
 /**
  * Author       : sidof <br>
  * LinkedIn    :  <a href="https://www.linkedin.com/in/sidof-dountio/">sidofDountio</a> <br>
@@ -81,4 +83,17 @@ public class CourseEnrollmentService implements CourseEnrollmentServiceImpl {
         log.info("Fetch enrollment id {} ", id);
         return courseEnrollmentRepo.findById(id).get();
     }
+
+    @Override
+    public Boolean deleteCourseEnrollment(Long id) throws BadRequestException {
+        if(!courseEnrollmentRepo.existsById(id)){
+            log.error("ID not found {}",id);
+            throw new BadRequestException("ID not found");
+        }
+        log.info("Successfuly deleted");
+        courseEnrollmentRepo.deleteById(id);
+        return TRUE;
+    }
+
+
 }

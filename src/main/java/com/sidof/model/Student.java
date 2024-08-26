@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sidof.model.enumeration.Gender;
 import com.sidof.model.enumeration.SchoolPayStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
@@ -72,6 +69,7 @@ public class Student {
     private boolean registed;
     @Enumerated(STRING)
     private SchoolPayStatus schoolPayStatus;
+    private boolean active;
 
     public Student(Long id, String firstName, String lastName, Gender gender, LocalDate dateOfBirth, String email) {
         this.id = id;

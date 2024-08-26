@@ -8,5 +8,6 @@ public enum
 SchoolPayStatus {
     NOPAY,
     PENDING,
-    PAY
+    PAY,
+    COMPLETE
 }

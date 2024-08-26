@@ -41,6 +41,8 @@ public class StudentSchoolFeeService implements StudentSchoolFeeServiceImpl {
      */
     @Override
     public StudentSchoolFee save(StudentSchoolFee studentSchoolFeeToSave) throws BadRequestException {
+        Year endYear = studentSchoolFeeToSave.getEndYear();
+        studentSchoolFeeToSave.setYear(endYear.minusYears(1));
         var studentById = getStudentById(studentSchoolFeeToSave);
         SchoolFee schoolFeeByOptionAndLevel = getSchoolFeeByOptionAndLevel(studentSchoolFeeToSave);
         double firstPay = studentSchoolFeeToSave.getFirstPay();

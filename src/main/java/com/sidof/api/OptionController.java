@@ -58,4 +58,15 @@ public class OptionController {
                 .message("option retrieved")
                 .build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomResponse> deleteOption(@PathVariable("id") Long id) throws BadRequestException {
+        return ResponseEntity.ok(CustomResponse.builder()
+                .timeStamp(now())
+                .data(of("option", optionService.deleteOption(id)))
+                .status(OK)
+                .statusCode(OK.value())
+                .message("option successfully deleted")
+                .build());
+    }
 }

@@ -17,4 +17,10 @@ import java.util.Optional;
 public interface OptionRepo extends JpaRepository<Option, Long> {
     @Query("SELECT o FROM Option o WHERE o.name = ?1")
     Optional<Option>findByName(String name);
+    @Query("" +
+            "SELECT CASE WHEN COUNT(o) > 0 THEN " +
+            "TRUE ELSE FALSE END " +
+            "FROM Option o WHERE o.name = ?1 AND o.fullName= ?2")
+    Boolean selectExistingOptionByNameAndFullName(String name,String fullName);
+
 }

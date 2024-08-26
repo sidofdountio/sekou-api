@@ -15,4 +15,5 @@ import java.util.List;
 public interface OptionServiceImpl {
     List<Option> getOptions();
     Option save(Option option ) throws BadRequestException;
+    Boolean deleteOption(Long id ) throws BadRequestException;
 }

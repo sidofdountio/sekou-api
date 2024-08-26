@@ -33,7 +33,7 @@ public class StudentSchoolFeeApi {
     private final StudentSchoolFeeService studentSchoolFeeService;
 
     @PostMapping
-    public ResponseEntity<CustomResponse> save(@RequestBody StudentSchoolFee studentSchoolFeeToSave) throws BadRequestException {
+    public ResponseEntity<CustomResponse> save(@RequestBody StudentSchoolFee studentSchoolFeeToSave) throws BadRequestException ,IllegalArgumentException{
         return ResponseEntity.ok(CustomResponse.builder()
                 .timeStamp(now())
                 .data(of("studentSchoolFee", studentSchoolFeeService.save(studentSchoolFeeToSave)))

@@ -16,5 +16,8 @@ public interface CourseEnrollmentServiceImpl {
     CourseEnrollment save(CourseEnrollment courseEnrollmentToSave) throws BadRequestException;
     CourseEnrollment update(CourseEnrollment courseEnrollmentToSave) throws BadRequestException;
     CourseEnrollment getCourseEnrollment(Long id) throws BadRequestException;
+    Boolean deleteCourseEnrollment(Long id) throws BadRequestException;
+
+
 
 }

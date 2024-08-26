@@ -44,6 +44,7 @@ public class Level {
     @JsonIgnore
     @OneToMany(mappedBy = "level")
     private List<SchoolFee> schoolFees = new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "level")
     private List<StudentSchoolFee> studentSchoolFees = new ArrayList<>();
 

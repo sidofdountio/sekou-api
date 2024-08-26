@@ -1,11 +1,13 @@
 package com.sidof.model;
 
+import com.sidof.model.enumeration.SchoolPayStatus;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.time.Year;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 /**
@@ -14,6 +16,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
  * Since       : 07/08/2024  <br>
  * Version    : v1.0.0
  */
+
 @Entity
 public class StudentSchoolFee {
     @Id
@@ -33,18 +36,21 @@ public class StudentSchoolFee {
     @Column(nullable = false, name = "years")
     private Year year;
     private Year endYear;
-    private String schoolYear;
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_school_fee_student"))
     private Student student;
     @ManyToOne
-    @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_school_fee_level"))
+    @JoinColumn(name = "level_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_school_fees_level"))
     private Level level;
     @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_student_school_fee_option"))
     private Option option;
     @Column(nullable = true)
     private LocalDateTime latestDate;
+    @Enumerated(STRING)
+    @Column(
+            columnDefinition = "VARCHAR(255)  default 'NOPAY'")
+    private SchoolPayStatus schoolPayStatus;
 
     public StudentSchoolFee(Long id, boolean payOneTime, boolean payMultiTime, double firstPay, double secondPay, double thirdPay, double schoolFeeTotal, Year endYear, Student student, Level level, Option option) {
         this.id = id;
@@ -54,25 +60,13 @@ public class StudentSchoolFee {
         this.secondPay = secondPay;
         this.thirdPay = thirdPay;
         this.schoolFeeTotal = schoolFeeTotal;
-        this.year = year;
         this.endYear = endYear;
-        this.schoolYear = schoolYear;
         this.student = student;
         this.level = level;
         this.option = option;
     }
 
     public StudentSchoolFee() {
-
-    }
-
-
-    public LocalDateTime getLatestDate() {
-        return latestDate;
-    }
-
-    public void setLatestDate(LocalDateTime latestDate) {
-        this.latestDate = latestDate;
     }
 
     public Long getId() {
@@ -123,6 +117,14 @@ public class StudentSchoolFee {
         this.thirdPay = thirdPay;
     }
 
+    public double getSchoolFeeTotal() {
+        return schoolFeeTotal;
+    }
+
+    public void setSchoolFeeTotal(double schoolFeeTotal) {
+        this.schoolFeeTotal = schoolFeeTotal;
+    }
+
     public Year getYear() {
         return year;
     }
@@ -137,14 +139,6 @@ public class StudentSchoolFee {
 
     public void setEndYear(Year endYear) {
         this.endYear = endYear;
-    }
-
-    public String getSchoolYear() {
-        return schoolYear;
-    }
-
-    public void setSchoolYear(String schoolYear) {
-        this.schoolYear = schoolYear;
     }
 
     public Student getStudent() {
@@ -171,12 +165,12 @@ public class StudentSchoolFee {
         this.option = option;
     }
 
-    public double getSchoolFeeTotal() {
-        return schoolFeeTotal;
+    public LocalDateTime getLatestDate() {
+        return latestDate;
     }
 
-    public void setSchoolFeeTotal(double schoolFeeTotal) {
-        this.schoolFeeTotal = schoolFeeTotal;
+    public void setLatestDate(LocalDateTime latestDate) {
+        this.latestDate = latestDate;
     }
 
     @Override
@@ -191,7 +185,6 @@ public class StudentSchoolFee {
                 ", schoolFeeTotal=" + schoolFeeTotal +
                 ", year=" + year +
                 ", endYear=" + endYear +
-                ", schoolYear='" + schoolYear + '\'' +
                 ", student=" + student +
                 ", level=" + level +
                 ", option=" + option +
